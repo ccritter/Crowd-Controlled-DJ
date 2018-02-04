@@ -2,7 +2,7 @@
 title: Crowd Controlled DJ
 ---
 
-# [P1]() | [P2](P2)
+# [P1]() | [P2](p2)
 
 Elijah Foreman: foreman.e@husky.neu.edu
 
