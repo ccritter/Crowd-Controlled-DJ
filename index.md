@@ -2,6 +2,8 @@
 title: Crowd Controlled DJ
 ---
 
+# [P1](/) | [P2](/P2)
+
 Elijah Foreman: foreman.e@husky.neu.edu
 
 Chris Ritter: ritter.c@husky.neu.edu
