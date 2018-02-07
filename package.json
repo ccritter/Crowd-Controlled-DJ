@@ -1,0 +1,16 @@
+{
+  "name": "YouMix",
+  "version": "1.0.0",
+  "description": "Crowd Controlled DJ application.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "keywords": [],
+  "author": "Chris Ritter",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.2",
+    "socket.io": "^2.0.4"
+  }
+}
