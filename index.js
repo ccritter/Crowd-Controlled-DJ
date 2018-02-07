@@ -7,7 +7,7 @@ const app = express();
 app.use(express.static(path.join(__dirname, 'client/build')));
 
 app.get('/api/test', (req, res) => {
-  res.send('test');
+  res.send('Checking that git is working');
 });
 
 // // Put all API endpoints under '/api'
