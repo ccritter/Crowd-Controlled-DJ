@@ -8,8 +8,10 @@ require('dotenv').config();
 const rooms = io.sockets.adapter.rooms;
 
 class Song {
-  constructor(id) {
-    this.id = id;
+  constructor(song) {
+    this.id = song.id;
+    this.title = song.title;
+    this.thumbnail = song.thumbnail;
     this.numVotes = 0;
   }
 
@@ -29,6 +31,7 @@ app.use(express.static(path.join(__dirname, 'client/build')));
 
 io.on('connection', socket => {
   console.log("New client connected");
+
   // Handle user disconnecting. TODO: Add a timeout so they don't lose their room
   socket.on("disconnect", () => console.log("Client disconnected"));
   // TODO: Figure out what happens when the DJ disconnects.
@@ -40,6 +43,7 @@ io.on('connection', socket => {
     if(room) {
       // If the room exists
       socket.join(roomID);
+      socket.emit('welcome', rooms[roomID].songlist)
       console.log("Joined successfully");
       cb(true);
     } else {
@@ -51,7 +55,7 @@ io.on('connection', socket => {
   });
 
   // Handle user host room requests
-  socket.on("hostroom", () => {
+  socket.on("hostroom", (cb) => {
     // Statistically should only need to run once. Ensures no duplicate rooms.
     let foundRoom = false;
     let roomID;
@@ -63,7 +67,13 @@ io.on('connection', socket => {
     console.log("Hosting room " + roomID);
     socket.join(roomID);
     rooms[roomID].djID = socket.id;
-    rooms[roomID].songlist = []; // maybe make a room init function, and add functions like getTopSong()
+    rooms[roomID].songlist = [];
+    cb(roomID); // maybe make a room init function, and add functions like getTopSong()
+  });
+
+  socket.on("addsong", (song, roomID) => {
+    rooms[roomID].songlist.push(new Song(song));
+    io.to(roomID).emit('song added', rooms[roomID].songlist);
   });
 });
 

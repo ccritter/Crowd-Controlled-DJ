@@ -1,10 +1,12 @@
 /* global gapi */
 import React, { Component } from 'react';
+import SearchResults from './SearchResults'
 
 export default class SearchBar extends Component {
   constructor(props) {
     super(props);
 
+    this.state = { results: [] }; // Should this be an array?
     this.search = this.search.bind(this);
   }
 
@@ -14,12 +16,21 @@ export default class SearchBar extends Component {
     let request = gapi.client.youtube.search.list({
       type: 'video',
       videoEmbeddable: true,
-      q: query,
-      part: 'id' // prob make the part a snippet or something even more if I want thumbs and titles and stuff
+      part: 'snippet',
+      q: query
     });
 
-    request.execute((res) => { console.log(res)});
+    request.execute((res) => {
+      this.setState({
+        results: res.items
+      });
+    });
   }
+
+  // showResults = (res) => {
+  //   // TODO: do some error handling
+  //   return <SearchResults items={res.items}/>
+  // }
 
   render() {
     // TODO replace the search button with something nicer looking
@@ -32,6 +43,7 @@ export default class SearchBar extends Component {
             ref={(input) => this.input = input}/>
           <button type="submit">Search</button>
         </form>
+        <SearchResults socket={this.props.socket} results={this.state.results} room={this.props.room}/>
       </div>
     );
   }
