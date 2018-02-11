@@ -6,9 +6,8 @@ import io from 'socket.io-client';
 import SplashScreen from './components/SplashScreen'
 import Turntable from './components/Turntable'
 import VoteScreen from './components/VoteScreen'
-console.log(require('dotenv').config());
 const socket = io();
-const ytApi = process.env.YT_API_KEY;
+const ytApi = process.env.REACT_APP_YT_API_KEY;
 
 class App extends Component {
   constructor(props) {
@@ -31,7 +30,6 @@ class App extends Component {
         gapi.client.load('youtube', 'v3', () => {
           console.log("Youtube API Loaded.");
           console.log(process.env);
-          console.log(require('dotenv').config());
           // this.setState({ gapiReady: true });
         });
       });
