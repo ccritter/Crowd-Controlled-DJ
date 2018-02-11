@@ -1,5 +1,15 @@
 import React, { Component } from 'react';
 
-class Queue extends Component {
-  // Consists of a list of songs rendered as QueuedSong components
+export default class Queue extends Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    return (
+      <div className="Queue">
+
+      </div>
+    );
+  }
 }

@@ -1,3 +1,4 @@
+/* global gapi */
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
@@ -5,7 +6,9 @@ import io from 'socket.io-client';
 import SplashScreen from './components/SplashScreen'
 import Turntable from './components/Turntable'
 import VoteScreen from './components/VoteScreen'
+console.log(require('dotenv').config());
 const socket = io();
+const ytApi = process.env.YT_API_KEY;
 
 class App extends Component {
   constructor(props) {
@@ -18,8 +21,28 @@ class App extends Component {
 
   }
 
+  loadYoutubeApi() {
+    const script = document.createElement("script");
+    script.src = "https://apis.google.com/js/client.js";
+
+    script.onload = () => {
+      gapi.load('client', () => {
+        gapi.client.setApiKey(ytApi);
+        gapi.client.load('youtube', 'v3', () => {
+          console.log("Youtube API Loaded.");
+          console.log(process.env);
+          console.log(require('dotenv').config());
+          // this.setState({ gapiReady: true });
+        });
+      });
+    };
+
+    document.body.appendChild(script);
+  }
+
   componentDidMount() {
     this.testInit(); // TODO: Get rid of this and the corresponding function
+    this.loadYoutubeApi();
   }
 
   testInit = () => {

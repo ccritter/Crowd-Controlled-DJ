@@ -29,23 +29,28 @@ app.use(express.static(path.join(__dirname, 'client/build')));
 
 io.on('connection', socket => {
   console.log("New client connected");
+  // Handle user disconnecting. TODO: Add a timeout so they don't lose their room
   socket.on("disconnect", () => console.log("Client disconnected"));
   // TODO: Figure out what happens when the DJ disconnects.
 
+  // Handle user room join requests
   socket.on("joinroom", (roomID, cb) => {
     console.log("Joining room " + roomID);
     const room = rooms[roomID];
     if(room) {
+      // If the room exists
       socket.join(roomID);
       console.log("Joined successfully");
       cb(true);
     } else {
+      // If the room does not exist
       // TODO: Do something
       console.log("Room doesn't exist")
       cb(false);
     }
   });
 
+  // Handle user host room requests
   socket.on("hostroom", () => {
     // Statistically should only need to run once. Ensures no duplicate rooms.
     let foundRoom = false;
@@ -56,36 +61,16 @@ io.on('connection', socket => {
       if (!room) foundRoom = true; // If no room with that ID exists, create it.
     }
     console.log("Hosting room " + roomID);
-    // emit the roomID and socketID?
     socket.join(roomID);
     rooms[roomID].djID = socket.id;
     rooms[roomID].songlist = []; // maybe make a room init function, and add functions like getTopSong()
   });
 });
 
-app.get('/:roomid', (req, res) => {
-  res.send(req.params.roomid)
-});
-
 app.get('/api/test', (req, res) => {
   res.json({name: 'Chris'});
 });
 
-// // Put all API endpoints under '/api'
-// app.get('/api/passwords', (req, res) => {
-//   const count = 5;
-//
-// // Generate some passwords
-// const passwords = Array.from(Array(count).keys()).map(i =>
-//   generatePassword(12, false)
-// )
-//
-// // Return them as json
-// res.json(passwords);
-//
-// console.log(`Sent ${count} passwords`);
-// });
-//
 // // The "catchall" handler: for any request that doesn't
 // // match one above, send back React's index.html file.
 // app.get('*', (req, res) => {

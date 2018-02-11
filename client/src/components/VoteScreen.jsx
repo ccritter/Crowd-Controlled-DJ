@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import SearchBar from './SearchBar';
 
 export default class VoteScreen extends Component {
   constructor(props) {
@@ -7,7 +8,10 @@ export default class VoteScreen extends Component {
 
   render() {
     return (
-      <div>Yer tha audience</div>
+      <div className="VoteScreen">
+        Yer tha audience
+        <SearchBar/>
+      </div>
     );
   }
 }

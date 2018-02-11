@@ -6,7 +6,6 @@ export default class SplashScreen extends Component {
   constructor(props) {
     super(props);
 
-    this.handleChange = this.handleChange.bind(this);
     this.joinRoom = this.joinRoom.bind(this);
 
     socket = this.props.socket;
@@ -21,7 +20,7 @@ export default class SplashScreen extends Component {
 
   joinRoom = (e) => {
     e.preventDefault();
-    let roomID = this.state.room;
+    let roomID = this.input.value;
     socket.emit('joinroom', roomID, function(success) {
       if (success) appstate(1);
       // TODO: else display some error message
@@ -33,20 +32,15 @@ export default class SplashScreen extends Component {
     appstate(2);
   }
 
-  handleChange = (e) => {
-    this.setState({room: e.target.value});
-  }
-
   render() {
     return (
       <div className="SplashScreen">
-        <form
-          onSubmit={this.joinRoom}>
+        <form onSubmit={this.joinRoom}>
           <input
             id="room"
             type="text"
             placeholder="Room ID"
-            onChange={this.handleChange}/>
+            ref={(input) => this.input = input}/>
           <button
             type="submit"
             className="join">
