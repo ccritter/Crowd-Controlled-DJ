@@ -21,7 +21,9 @@ class App extends Component {
 
   }
 
-  loadYoutubeApi() {
+  // TODO: Figure out when do define functions like this, or as an arrow function.
+
+  loadYoutubeDataApi() {
     const script = document.createElement("script");
     script.src = "https://apis.google.com/js/client.js";
 
@@ -39,7 +41,7 @@ class App extends Component {
 
   componentDidMount() {
     // this.testInit(); // TODO: Get rid of this and the corresponding function
-    this.loadYoutubeApi();
+    this.loadYoutubeDataApi();
 
     // TODO: consolidate these two functions? they are identical
     socket.on('song added', (songlist) => {

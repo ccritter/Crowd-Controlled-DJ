@@ -11,7 +11,7 @@ export default class Queue extends Component {
         {this.props.songs.map((song) => {
           return (
             <div key={song.id}>
-              <img src={song.thumbnail} />
+              <img src={song.thumbnail} alt="thumbnail" />
               <p>{song.title}</p>
               <p>{song.numVotes}</p>
             </div>
