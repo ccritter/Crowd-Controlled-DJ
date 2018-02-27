@@ -7,6 +7,7 @@ To install:
 3. Run 'npm install'
 4. cd into /client
 5. Run 'npm install'
+6. In the client directory, create a file called '.env' and paste in the API key that I gave you.
 
 To run:
 1. Have two terminal windows open, one in the root directory of the project and one in /client
