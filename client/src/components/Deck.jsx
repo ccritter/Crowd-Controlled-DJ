@@ -12,6 +12,7 @@ export default class Deck extends Component {
     this.loadNewSong = this.loadNewSong.bind(this);
     this.playOrPause = this.playOrPause.bind(this);
     this.setPlaySpeed = this.setPlaySpeed.bind(this);
+    this.setVolume = this.setVolume.bind(this);
   }
 
   /*
@@ -83,12 +84,19 @@ export default class Deck extends Component {
     this.player.setPlaybackRate(rates[event.target.value]);
   }
 
+  setVolume(event) {
+    this.player.setVolume(event.target.value);
+  }
+
+  // For the start, end, and queue slider we can use https://refreshless.com/nouislider/
+
   render() {
     return (
       <div className={this.props.side + "-Deck"}>
         <div  ref={(r) => { this.ytcontainer = r }}/>
         <button onClick={() => this.playOrPause()}>{this.state.playerState === 1 ? 'Pause' : 'Play'}</button>
         <input type="range" name="speed" min="0" max="5" defaultValue="2" onInput={this.setPlaySpeed} />
+        <input type="range" orient="vertical" min="0" max="100" defaultValue="80" onInput={this.setVolume}/>
       </div>
     );
   }

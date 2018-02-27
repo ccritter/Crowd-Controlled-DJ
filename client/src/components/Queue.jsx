@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import QueuedSong from './QueuedSong'
 
 export default class Queue extends Component {
   constructor(props) {
@@ -10,11 +11,7 @@ export default class Queue extends Component {
       <div className="Queue">
         {this.props.songs.map((song) => {
           return (
-            <div key={song.id}>
-              <img src={song.thumbnail} alt="thumbnail" />
-              <p>{song.title}</p>
-              <p>{song.numVotes}</p>
-            </div>
+            <QueuedSong song={song} socket={this.props.socket}/>
           );
         })}
       </div>

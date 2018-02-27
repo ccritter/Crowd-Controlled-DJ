@@ -75,6 +75,15 @@ io.on('connection', socket => {
     rooms[roomID].songlist.push(new Song(song));
     io.to(roomID).emit('song added', rooms[roomID].songlist);
   });
+
+  // Upvoting/Downvoting currently will likely not work, we will need to test it.
+  socket.on("upvote", (song) => {
+    song.upvote() // TODO: I don't believe this actually changes the vote in the server song list
+  });
+
+  socket.on("downvote", (song) => {
+    song.downvote()
+  });
 });
 
 app.get('/api/test', (req, res) => {

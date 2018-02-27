@@ -69,6 +69,7 @@ class App extends Component {
 
   render() {
     let screen = null;
+    // TODO: This screen switch statement needs to be modified, since "VoteScreen" will be always visible (except in splash)
     switch (this.state.mode) {
       case 0:
         screen = <SplashScreen socket={socket}

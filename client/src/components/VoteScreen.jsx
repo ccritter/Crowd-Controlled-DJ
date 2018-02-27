@@ -10,9 +10,8 @@ export default class VoteScreen extends Component {
   render() {
     return (
       <div className="VoteScreen">
-        Yer tha audience in room {this.props.room}
         <SearchBar socket={this.props.socket} room={this.props.room}/>
-        <Queue songs={this.props.songlist}/>
+        <Queue socket={this.props.socket} songs={this.props.songlist}/>
       </div>
     );
   }
