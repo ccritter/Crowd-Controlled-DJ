@@ -7,12 +7,14 @@ export default class Deck extends Component {
     this.state = {
       currentSong: '', // Stores the id of the currently playing song
       playerState: -1
-    }
+    };
 
     this.loadNewSong = this.loadNewSong.bind(this);
     this.playOrPause = this.playOrPause.bind(this);
     this.setPlaySpeed = this.setPlaySpeed.bind(this);
     this.setVolume = this.setVolume.bind(this);
+    // TODO: Check if this needs to be bound once adding from queue is implemented
+    this.onPlayerStateChange = this.onPlayerStateChange.bind(this);
   }
 
   /*
@@ -48,6 +50,7 @@ export default class Deck extends Component {
    */
 
   componentDidMount() {
+    // TODO: This is only here for testing, get rid of it eventually
     this.loadNewSong({ id: 'dQw4w9WgXcQ' });
   }
 
@@ -66,7 +69,7 @@ export default class Deck extends Component {
     });
   }
 
-  onPlayerStateChange = (e) => {
+  onPlayerStateChange(e) {
     this.setState({ playerState: e.data });
   }
 
@@ -79,7 +82,7 @@ export default class Deck extends Component {
   }
 
   setPlaySpeed(event) {
-    // Make this use getAvailablePlaybackRates()?
+    // TODO: Make this use getAvailablePlaybackRates()?
     let rates = [.5, .75, 1, 1.25, 1.5, 2];
     this.player.setPlaybackRate(rates[event.target.value]);
   }
@@ -88,15 +91,15 @@ export default class Deck extends Component {
     this.player.setVolume(event.target.value);
   }
 
-  // For the start, end, and queue slider we can use https://refreshless.com/nouislider/
+  // TODO: For the start, end, and playhead slider we can use https://refreshless.com/nouislider/
 
   render() {
     return (
       <div className={this.props.side + "-Deck"}>
         <div  ref={(r) => { this.ytcontainer = r }}/>
-        <button onClick={() => this.playOrPause()}>{this.state.playerState === 1 ? 'Pause' : 'Play'}</button>
+        <button onClick={this.playOrPause}>{this.state.playerState === 1 ? 'Pause' : 'Play'}</button>
         <input type="range" name="speed" min="0" max="5" defaultValue="2" onInput={this.setPlaySpeed} />
-        <input type="range" orient="vertical" min="0" max="100" defaultValue="80" onInput={this.setVolume}/>
+        <input type="range" orient="vertical" min="0" max="100" defaultValue="80" onInput={this.setVolume} />
       </div>
     );
   }

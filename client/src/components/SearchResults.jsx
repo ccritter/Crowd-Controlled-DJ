@@ -7,7 +7,7 @@ export default class SearchResults extends Component {
     this.addSong = this.addSong.bind(this);
   }
 
-  addSong = (song) => {
+  addSong(song) {
     this.props.socket.emit('addsong', song, this.props.room);
   }
 

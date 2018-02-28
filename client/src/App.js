@@ -3,9 +3,9 @@ import React, { Component } from 'react';
 import logo from './logo.png';
 import './App.css';
 import io from 'socket.io-client';
-import SplashScreen from './components/SplashScreen'
-import Turntable from './components/Turntable'
-import VoteScreen from './components/VoteScreen'
+import SplashScreen from './components/SplashScreen';
+import Turntable from './components/Turntable';
+import VoteScreen from './components/VoteScreen';
 const socket = io();
 const ytApi = process.env.REACT_APP_YT_API_KEY;
 
@@ -17,11 +17,11 @@ class App extends Component {
       mode: 0, // 0 is not in room, 1 is voter, 2 is DJ. This may be unnecessary if we get user state from the server.
       room: '',
       songlist: []
-    }
+    };
 
+    this.changeMode = this.changeMode.bind(this);
+    this.changeRoom = this.changeRoom.bind(this);
   }
-
-  // TODO: Figure out when do define functions like this, or as an arrow function.
 
   loadYoutubeDataApi() {
     const script = document.createElement("script");
@@ -40,10 +40,10 @@ class App extends Component {
   }
 
   componentDidMount() {
-    // this.testInit(); // TODO: Get rid of this and the corresponding function
+    // this.testInit(); // TODO: Get rid of this and the corresponding function. Only still here for reference
     this.loadYoutubeDataApi();
 
-    // TODO: consolidate these two functions? they are identical
+    // TODO: consolidate these two functions? they are identical. We will see
     socket.on('song added', (songlist) => {
       this.setState({ songlist: songlist });
     });
@@ -59,17 +59,18 @@ class App extends Component {
   //     .then(resj => this.setState({ name: resj.name }));
   // }
 
-  changeMode = (mode) => {
+  changeMode(mode)  {
     this.setState({ mode: mode});
   }
 
-  changeRoom = (room) => {
+  changeRoom(room) {
     this.setState({ room: room});
   }
 
   render() {
     let screen = null;
     // TODO: This screen switch statement needs to be modified, since "VoteScreen" will be always visible (except in splash)
+    // TODO: TBH this whole thing will be modified. I'll get to that.
     switch (this.state.mode) {
       case 0:
         screen = <SplashScreen socket={socket}

@@ -8,7 +8,9 @@ export default class SplashScreen extends Component {
     super(props);
 
     this.joinRoom = this.joinRoom.bind(this);
+    this.hostRoom = this.hostRoom.bind(this);
 
+    // Create global variables so that callbacks can access them
     socket = this.props.socket;
     appstate = this.props.appstate;
     changeroom = this.props.changeroom;
@@ -20,7 +22,7 @@ export default class SplashScreen extends Component {
     });
   }
 
-  joinRoom = (e) => {
+  joinRoom(e) {
     e.preventDefault();
     let roomID = this.input.value;
     socket.emit('joinroom', roomID, function(success) {
@@ -32,7 +34,7 @@ export default class SplashScreen extends Component {
     });
   }
 
-  hostRoom = () => {
+  hostRoom() {
     socket.emit('hostroom', (newRoom) => {
       appstate(2);
       changeroom(newRoom);

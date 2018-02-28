@@ -10,7 +10,7 @@ export default class SearchBar extends Component {
     this.search = this.search.bind(this);
   }
 
-  search = (e) => {
+  search(e) {
     e.preventDefault();
     let query = this.input.value;
     let request = gapi.client.youtube.search.list({
@@ -33,7 +33,6 @@ export default class SearchBar extends Component {
   // }
 
   render() {
-    // TODO replace the search button with something nicer looking
     return (
       <div className="SearchBar">
         <form onSubmit={this.search}>

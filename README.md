@@ -14,3 +14,7 @@ To run:
 2. In the root directory terminal, run 'npm start'
 3. In the client directory terminal, run 'npm start'
 4. The browser should open up to the site, but if not, navigate to 'localhost:3000'
+
+Style standards:
+- I like having explicit semicolons
+- Class method binding should be done in the constructor instead of as an arrow function. I'm willing to negotiate this but this is the standard I'm currently following.

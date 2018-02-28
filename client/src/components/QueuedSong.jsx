@@ -5,13 +5,14 @@ export default class QueuedSong extends Component {
     super(props);
 
     this.upvote = this.upvote.bind(this);
+    this.downvote = this.downvote.bind(this);
   }
 
-  upvote = () => {
+  upvote() {
     this.props.socket.emit('upvote', this.props.song);
   }
 
-  downvote = () => {
+  downvote() {
     this.props.socket.emit('downvote', this.props.song);
   }
 
@@ -21,9 +22,9 @@ export default class QueuedSong extends Component {
         <img src={this.props.song.thumbnail} alt="thumbnail" />
         <p>{this.props.song.id}</p>
         <p>{this.props.song.title}</p>
-        <div className="arrow-upvote" onClick={this.upvote}/>
+        <div className="arrow-upvote" onClick={this.upvote} />
         <p>{this.props.song.numVotes}</p>
-        <div className="arrow-downvote" onClick={this.downvote}/>
+        <div className="arrow-downvote" onClick={this.downvote} />
       </div>
     );
   }
