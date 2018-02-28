@@ -1,11 +1,11 @@
 /* global gapi */
 import React, { Component } from 'react';
-import logo from './logo.png';
+// require('bootstrap');
+// import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import io from 'socket.io-client';
 import SplashScreen from './components/SplashScreen';
-import Turntable from './components/Turntable';
-import VoteScreen from './components/VoteScreen';
+import MainContainer from './components/MainContainer'
 const socket = io();
 const ytApi = process.env.REACT_APP_YT_API_KEY;
 
@@ -68,39 +68,18 @@ class App extends Component {
   }
 
   render() {
-    let screen = null;
-    // TODO: This screen switch statement needs to be modified, since "VoteScreen" will be always visible (except in splash)
-    // TODO: TBH this whole thing will be modified. I'll get to that.
-    switch (this.state.mode) {
-      case 0:
-        screen = <SplashScreen socket={socket}
-                               appstate={this.changeMode}
-                               changeroom={this.changeRoom}/>;
-        break;
-      case 1:
-        screen = <VoteScreen socket={socket}
-                             songlist={this.state.songlist}
-                             appstate={this.changeMode}
-                             room={this.state.room}/>;
-        break;
-      case 2:
-        screen = <Turntable socket={socket}
-                            songlist={this.state.songlist}
-                            appstate={this.changeMode}
-                            room={this.state.room}/>;
-        break;
-      default:
-        console.log("Something broke, unknown mode.");
-    }
-
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to YouMix</h1>
-        </header>
-        <br/>
-        {screen}
+        {this.state.mode === 0 ?
+          <SplashScreen socket={socket}
+                        appstate={this.changeMode}
+                        changeroom={this.changeRoom}/>
+        :
+          <MainContainer socket={socket}
+                         songlist={this.state.songlist}
+                         room={this.state.room}
+                         mode={this.state.mode} />
+        }
       </div>
     );
   }

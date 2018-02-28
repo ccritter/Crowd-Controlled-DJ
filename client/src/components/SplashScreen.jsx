@@ -44,6 +44,7 @@ export default class SplashScreen extends Component {
   render() {
     return (
       <div className="SplashScreen">
+        <h1>YouMix</h1>
         <form onSubmit={this.joinRoom}>
           <input
             id="room"
@@ -52,13 +53,13 @@ export default class SplashScreen extends Component {
             ref={(input) => this.input = input}/>
           <button
             type="submit"
-            className="join">
+            className="join btn btn-primary">
               Join
           </button>
         </form>
         <br/>
         <button
-          className="host"
+          className="host btn btn-primary"
           onClick={this.hostRoom}>
             Host
         </button>

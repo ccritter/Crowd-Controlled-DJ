@@ -1,12 +1,10 @@
 /* global gapi */
 import React, { Component } from 'react';
-import SearchResults from './SearchResults'
 
 export default class SearchBar extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { results: [] }; // Should this be an array?
     this.search = this.search.bind(this);
   }
 
@@ -21,9 +19,10 @@ export default class SearchBar extends Component {
     });
 
     request.execute((res) => {
-      this.setState({
-        results: res.items
-      });
+      this.props.sendResults(res);
+      // this.setState({
+      //   results: res.items
+      // });
     });
   }
 
@@ -42,7 +41,6 @@ export default class SearchBar extends Component {
             ref={(input) => this.input = input}/>
           <button type="submit">Search</button>
         </form>
-        <SearchResults socket={this.props.socket} results={this.state.results} room={this.props.room}/>
       </div>
     );
   }

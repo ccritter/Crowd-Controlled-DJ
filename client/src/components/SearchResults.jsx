@@ -14,6 +14,7 @@ export default class SearchResults extends Component {
   render() {
     return (
       <div className="SearchResults">
+        <h2>Search Results</h2>
         {this.props.results.map((result) => {
           let s = result.snippet;
           let id = result.id.videoId;

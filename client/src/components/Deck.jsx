@@ -95,7 +95,7 @@ export default class Deck extends Component {
 
   render() {
     return (
-      <div className={this.props.side + "-Deck"}>
+      <div className={this.props.side + "-Deck col"}>
         <div  ref={(r) => { this.ytcontainer = r }}/>
         <button onClick={this.playOrPause}>{this.state.playerState === 1 ? 'Pause' : 'Play'}</button>
         <input type="range" name="speed" min="0" max="5" defaultValue="2" onInput={this.setPlaySpeed} />

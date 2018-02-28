@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Queue from './Queue';
 import Deck from './Deck';
 
 let loadYT;
@@ -29,16 +28,14 @@ export default class Turntable extends Component {
   render() {
     return (
       <div className="Turntable">
-        Yer tha DJ in room {this.props.room}
         {!this.state.ytready ?
           <p>Loading...</p>
           :
-          <div>
+          <div className="row">
             <Deck side="Left" />
             <Deck side="Right" />
           </div>
         }
-        <Queue songs={this.props.songlist} />
       </div>
     );
   }
