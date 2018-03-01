@@ -19,12 +19,22 @@ export default class QueuedSong extends Component {
   render() {
     return (
       <div className="QueuedSong">
-        <img src={this.props.song.thumbnail} alt="thumbnail" />
-        <p>{this.props.song.id}</p>
-        <p>{this.props.song.title}</p>
-        <div className="arrow-upvote" onClick={this.upvote} />
-        <p>{this.props.song.numVotes}</p>
-        <div className="arrow-downvote" onClick={this.downvote} />
+          <div className="row">
+              <div className="col-4">
+                  <img src={this.props.song.thumbnail} alt="thumbnail" />
+              </div>
+              <div className="col-6 p-2">
+                  <p className="mb-1">{this.props.song.id}</p>
+                  <p className="mb-0">{this.props.song.title}</p>
+              </div>
+              <div className="col-2 p-2">
+                  <div class="row justify-content-center">
+                      <div className="arrow-upvote" onClick={this.upvote} />
+                      <p>{this.props.song.numVotes}</p>
+                      <div className="arrow-downvote" onClick={this.downvote} />
+                  </div>
+              </div>
+          </div>
       </div>
     );
   }
