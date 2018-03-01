@@ -28,10 +28,14 @@ export default class QueuedSong extends Component {
                   <p className="mb-0">{this.props.song.title}</p>
               </div>
               <div className="col-2 p-2">
-                  <div class="row justify-content-center">
-                      <div className="arrow-upvote" onClick={this.upvote} />
-                      <p>{this.props.song.numVotes}</p>
-                      <div className="arrow-downvote" onClick={this.downvote} />
+                  <div class="row justify-content-end flex-column">
+                      <div className="arrow-upvote" onClick={this.upvote}>
+                          <i className="fa fa-arrow-circle-up"></i>
+                      </div>
+                      <p className="m-1">{this.props.song.numVotes}</p>
+                      <div className="arrow-downvote" onClick={this.downvote}>
+                          <i className="fa fa-arrow-circle-down"></i>
+                      </div>
                   </div>
               </div>
           </div>

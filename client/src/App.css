@@ -23,6 +23,10 @@
   float: left;
 }
 
+.fa-large {
+  font-size: 2rem;
+}
+
 /*
 .App {
   text-align: center;

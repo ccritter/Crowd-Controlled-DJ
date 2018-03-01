@@ -48,7 +48,9 @@ export default class SplashScreen extends Component {
             <div className="pt-5 pb-5">
             </div>
             <div className="row justify-content-center pt-5 pb-5">
+              <i className="fa fa-music fa-large pr-2 mr-5"></i>
               <h1>YouMix</h1>
+              <i className="fa fa-headphones fa-large pl-2 ml-5"></i>
             </div>
             <div className="row justify-content-center pt-5 pb-5">
               <p>The crowd-controlled YouTube DJ application</p>
