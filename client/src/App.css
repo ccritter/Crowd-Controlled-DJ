@@ -98,6 +98,10 @@ input[type=range][orient=vertical]
   padding: 0 5px;
 }
 
+/*[handle-num="0"] .noUi-handle:after {*/
+  /*content: "Text only for value 5";*/
+/*}*/
+
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }

@@ -17,7 +17,7 @@ export default class SplashScreen extends Component {
   }
 
   componentDidMount() {
-    socket.on('connect', function(data) {
+    socket.on('connect', (data) => {
       socket.emit('join', 'Hello World from client');
     });
   }
@@ -44,19 +44,20 @@ export default class SplashScreen extends Component {
   render() {
     return (
         <div className="SplashScreen">
-          <div class="container">
-            <div class="pt-5 pb-5">
+          <div className="container">
+            <div className="pt-5 pb-5">
             </div>
-            <div class="row justify-content-center pt-5 pb-5">
+            <div className="row justify-content-center pt-5 pb-5">
               <h1>YouMix</h1>
             </div>
-            <div class="pt-5 pb-5">
+            <div className="row justify-content-center pt-5 pb-5">
+              <p>The crowd-controlled YouTube DJ application</p>
             </div>
-            <div class="row align-items-end pt-5">
-              <div class="col-4 offset-2">
+            <div className="row align-items-end pt-5">
+              <div className="col-4 offset-2">
                 <form onSubmit={this.joinRoom}>
-                  <div class="pb-2">
-                    <span class="pr-2">Room code:</span>
+                  <div className="pb-2">
+                    <span className="pr-2">Room code:</span>
                     <input
                         id="room"
                         type="text"
@@ -70,7 +71,7 @@ export default class SplashScreen extends Component {
                   </button>
                 </form>
               </div>
-              <div class="col-4 offset-2">
+              <div className="col-4 offset-2">
                 <button
                     className="host btn btn-primary px-5 py-3"
                     onClick={this.hostRoom}>

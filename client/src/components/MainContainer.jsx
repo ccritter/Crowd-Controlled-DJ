@@ -32,6 +32,7 @@ export default class MainContainer extends Component {
         <span aria-hidden="true">&times;</span>
       </button>
 
+    // TODO: BIG ASS BUG!! When results are visible for the DJ, the decks are gone and so audio stops and the iframe is reloaded. Move players/data out of the decks? or just draw the results on top?
     if (this.props.mode === 1) {
       // User is a guest. See if they're on mobile. If so, we need to check if results are currently visible:
       // TODO

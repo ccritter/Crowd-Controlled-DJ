@@ -7,6 +7,13 @@ export default class SearchResults extends Component {
     this.addSong = this.addSong.bind(this);
   }
 
+  componentDidMount() {
+    this.props.socket.on('dupesong', (data) => {
+      // TODO: better handling when this happens
+      alert("Song already in queue.");
+    });
+  }
+
   addSong(song) {
     this.props.socket.emit('addsong', song, this.props.room);
   }

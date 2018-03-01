@@ -72,8 +72,12 @@ io.on('connection', socket => {
   });
 
   socket.on("addsong", (song, roomID) => {
-    rooms[roomID].songlist.push(new Song(song));
-    io.to(roomID).emit('song added', rooms[roomID].songlist);
+    if (rooms[roomID].songlist.find((s) => s.id === song.id)) {
+      socket.emit('dupesong');
+    } else {
+      rooms[roomID].songlist.push(new Song(song));
+      io.to(roomID).emit('song added', rooms[roomID].songlist);
+    }
   });
 
   // Upvoting/Downvoting currently will likely not work, we will need to test it.
