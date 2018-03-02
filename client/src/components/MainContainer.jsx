@@ -64,7 +64,7 @@ export default class MainContainer extends Component {
                       mode={this.props.mode}
                       sendResults={this.showResults}/>
           <div className="col-sm-12 main">
-            <Topbar room={this.props.room}/>
+            <Topbar room={this.props.room} mode={this.props.mode}/>
             {content}
           </div>
         </div>
