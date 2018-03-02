@@ -27,6 +27,10 @@
   font-size: 2rem;
 }
 
+.arrow {
+  cursor: pointer;
+}
+
 /*
 .App {
   text-align: center;

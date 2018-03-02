@@ -29,7 +29,7 @@ export default class VoteScreen extends Component {
                   <SearchBar sendResults={this.props.sendResults}/>
               </div>
           </div>
-        <Queue socket={this.props.socket} songs={this.props.songlist}/>
+        <Queue socket={this.props.socket} songs={this.props.songlist} room={this.props.room}/>
       </div>
     );
   }

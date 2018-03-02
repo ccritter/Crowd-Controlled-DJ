@@ -9,11 +9,11 @@ export default class QueuedSong extends Component {
   }
 
   upvote() {
-    this.props.socket.emit('upvote', this.props.song);
+    this.props.socket.emit('upvote', this.props.song, this.props.room);
   }
 
   downvote() {
-    this.props.socket.emit('downvote', this.props.song);
+    this.props.socket.emit('downvote', this.props.song, this.props.room);
   }
 
   render() {
@@ -26,15 +26,16 @@ export default class QueuedSong extends Component {
               <div className="col-6 p-2">
                   <p className="mb-1">{this.props.song.id}</p>
                   <p className="mb-0">{this.props.song.title}</p>
+                  <p className="mb-0">{this.props.song.channelName}</p>
               </div>
               <div className="col-2 p-2">
-                  <div class="row justify-content-end flex-column">
-                      <div className="arrow-upvote" onClick={this.upvote}>
-                          <i className="fa fa-arrow-circle-up"></i>
+                  <div className="row justify-content-end flex-column">
+                      <div className="arrow arrow-upvote" onClick={this.upvote}>
+                          <i className="fa fa-arrow-circle-up"/>
                       </div>
                       <p className="m-1">{this.props.song.numVotes}</p>
-                      <div className="arrow-downvote" onClick={this.downvote}>
-                          <i className="fa fa-arrow-circle-down"></i>
+                      <div className="arrow arrow-downvote" onClick={this.downvote}>
+                          <i className="fa fa-arrow-circle-down"/>
                       </div>
                   </div>
               </div>

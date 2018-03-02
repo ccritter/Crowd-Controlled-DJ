@@ -20,6 +20,10 @@ export default class SplashScreen extends Component {
     socket.on('connect', (data) => {
       socket.emit('join', 'Hello World from client');
     });
+
+    socket.on('nonexistent room', (data) => {
+      alert('Room does not exist.');
+    });
   }
 
   joinRoom(e) {

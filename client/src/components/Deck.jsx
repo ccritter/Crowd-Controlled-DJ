@@ -139,7 +139,6 @@ export default class Deck extends Component {
 
   }
 
-  // TODO: For the start, end, and playhead slider we can use https://refreshless.com/nouislider/
   // TODO: use icons for play pause etc
   // TODO: Make play/pause and lock buttons a toggle. Eventually same for loops and stuff.
   render() {
@@ -151,7 +150,8 @@ export default class Deck extends Component {
             <div className="row">
               <img src={this.state.currentSong.thumbnail} />
               {this.state.currentSong.title}
-              {this.player.getDuration()} seconds (convert this to (H:)MM:SS
+              {this.state.currentSong.channelName}
+              {this.player.getDuration()} seconds (convert this to (H:)MM:SS)
             </div>
             <input type="range" orient="vertical" min="0" max="100" defaultValue="80" onInput={this.setVolume}/>
             <button onClick={this.mute} className="btn btn-default">Mute</button>

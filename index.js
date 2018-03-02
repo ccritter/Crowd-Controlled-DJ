@@ -12,6 +12,7 @@ class Song {
     this.id = song.id;
     this.title = song.title;
     this.thumbnail = song.thumbnail;
+    this.channelName = song.channelName;
     this.numVotes = 0;
   }
 
@@ -43,13 +44,13 @@ io.on('connection', socket => {
     if(room) {
       // If the room exists
       socket.join(roomID);
-      socket.emit('welcome', rooms[roomID].songlist)
+      socket.emit('receive songlist', rooms[roomID].songlist);
       console.log("Joined successfully");
       cb(true);
     } else {
       // If the room does not exist
-      // TODO: Do something
-      console.log("Room doesn't exist")
+      socket.emit('nonexistent room');
+      console.log("Room doesn't exist");
       cb(false);
     }
   });
@@ -75,18 +76,64 @@ io.on('connection', socket => {
     if (rooms[roomID].songlist.find((s) => s.id === song.id)) {
       socket.emit('dupesong');
     } else {
-      rooms[roomID].songlist.push(new Song(song));
-      io.to(roomID).emit('song added', rooms[roomID].songlist);
+      if (rooms[roomID].songlist.length === 0) {
+        rooms[roomID].songlist.push(new Song(song));
+      } else {
+        for (i = rooms[roomID].songlist.length - 1; i >= 0; i--) {
+          console.log("test");
+          if (rooms[roomID].songlist[i].numVotes > 0) {
+            rooms[roomID].songlist.splice(i + 1, 0, new Song(song));
+            break;
+          } else if (i === 0) {
+            rooms[roomID].songlist.splice(0, 0, new Song(song));
+          }
+        }
+      }
+      io.to(roomID).emit('receive songlist', rooms[roomID].songlist);
     }
   });
 
-  // Upvoting/Downvoting currently will likely not work, we will need to test it.
-  socket.on("upvote", (song) => {
-    song.upvote() // TODO: I don't believe this actually changes the vote in the server song list
+  socket.on("upvote", (song, roomID) => {
+    let sl = rooms[roomID].songlist;
+    let idx = sl.findIndex((s) => s.id === song.id);
+    let s = sl[idx];
+    s.upvote();
+
+    for (i = idx; i >= 0; i--) {
+      if (sl[i].numVotes > s.numVotes) {
+        sl.splice(idx, 1);
+        sl.splice(i + 1, 0, s);
+        break;
+      } else if (i === 0) {
+        sl.splice(idx, 1);
+        sl.splice(0, 0, s);
+      }
+    }
+    io.to(roomID).emit('receive songlist', sl);
   });
 
-  socket.on("downvote", (song) => {
-    song.downvote()
+  socket.on("downvote", (song, roomID) => {
+    let sl = rooms[roomID].songlist;
+    let idx = sl.findIndex((s) => s.id === song.id);
+    let s = sl[idx];
+    s.downvote();
+
+    // TODO: Base the downvote threshold on the number of people in room. maybe if 25% vote down?
+    if (s.numVotes < -5) {
+      sl.splice(idx, 1);
+    } else {
+      for (i = idx; i < sl.length; i++) {
+        if (sl[i].numVotes < s.numVotes) {
+          sl.splice(idx, 1);
+          sl.splice(i - 1, 0, s);
+          break;
+        } else if (i === sl.length - 1) {
+          sl.splice(idx, 1);
+          sl.splice(sl.length, 0, s);
+        }
+      }
+    }
+    io.to(roomID).emit('receive songlist', sl);
   });
 });
 
