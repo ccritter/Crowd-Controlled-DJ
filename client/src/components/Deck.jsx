@@ -171,7 +171,7 @@ export default class Deck extends Component {
         {this.props.currentSong && this.state.vidready ?
           <div>
             <div className="row">
-              <div className="col">
+              <div className={"col" + (this.props.side === "Right" ? " order-2" : " order-1")}>
                 <div className={this.props.side + "thumb row"}>
                   <img src={this.props.currentSong.thumbnail} />
                 </div>
@@ -198,7 +198,7 @@ export default class Deck extends Component {
                   </div>
                 </div>
               </div>
-              <div className={this.props.side + "volume col mb-5"}>
+              <div className={this.props.side + "volume col mb-5" + (this.props.side === "Right" ? " order-1" : " order-2")}>
                 <div className="row">
                   <div id={this.props.side + "volume"} className="noUiSlider"/>
                 </div>

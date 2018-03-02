@@ -55,11 +55,15 @@ body {
 }
 
 .Rightvolume {
-  float: left;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 .Leftvolume {
-  float: right;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
 }
 
 .Rightbuttons {
