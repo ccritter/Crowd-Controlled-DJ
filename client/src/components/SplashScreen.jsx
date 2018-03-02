@@ -57,13 +57,12 @@ export default class SplashScreen extends Component {
               <i className="fa fa-headphones fa-large pl-2 ml-5"></i>
             </div>
             <div className="row justify-content-center pt-5 pb-5">
-              <p>The crowd-controlled YouTube DJ application</p>
+              <p><em>The crowd-controlled YouTube DJ application</em></p>
             </div>
             <div className="row align-items-end pt-5">
               <div className="col-4 offset-2">
                 <form onSubmit={this.joinRoom}>
                   <div className="pb-2">
-                    <span className="pr-2">Room code:</span>
                     <input
                         id="room"
                         type="text"
