@@ -33,10 +33,10 @@ export default class SearchResults extends Component {
                   return (
                       <div key={id} className="col-3">
                           <div className="row justify-content-center flex-column p-2 pb-3">
-                              <img src={thumbnail} className="pb-2"/>
-                              <span className="pb-2">{title}</span>
-                              <span className="pb-2">{channelName}</span>
-                              <button onClick={() => { this.addSong({
+                              <img src={thumbnail} className="align-self-center pb-2"/>
+                              <span className="align-self-center text-center pb-2">{title}</span>
+                              <span className="align-self-center text-center pb-2">{channelName}</span>
+                              <button className="align-self-center" onClick={() => { this.addSong({
                                 id: id,
                                 title: title,
                                 channelName: channelName,

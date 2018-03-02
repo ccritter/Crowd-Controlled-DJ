@@ -14,6 +14,7 @@ export default class SearchBar extends Component {
     let request = gapi.client.youtube.search.list({
       type: 'video',
       videoEmbeddable: true,
+      maxResults: 8,
       part: 'snippet',
       q: query
     });

@@ -1,3 +1,8 @@
+body {
+  background-color: #282828;
+  color: #F5F5F5;
+}
+
 .VoteScreen {
   width: 400px;
   height: 100%;
@@ -7,6 +12,15 @@
   overflow-y: scroll;
 }
 
+.Topbar {
+  border-style: solid;
+  border-width: 1px;
+}
+
+.main {
+
+}
+
 @media (min-width: 768px) {
   .main {
     padding-right: 40px;
@@ -14,13 +28,51 @@
   }
 }
 
-.Topbar {
-  border-style: solid;
-  border-width: 1px;
+.Left-Deck {
+  text-align: left;
 }
 
-.close {
+.Rightthumb {
   float: left;
+}
+
+.xfader {
+  position: absolute;
+  text-align: center;
+  transform:translateX(-50%);
+  margin-left: 200px; /* 400 / 2 */
+  left: 50%;
+  z-index: 1;
+}
+
+/*.Right-Deck {*/
+  /*text-align: right;*/
+  /*float: right;*/
+/*}*/
+
+.Rightthumb {
+  float: right;
+}
+
+.Rightvolume {
+  float: left;
+}
+
+.Leftvolume {
+  float: right;
+}
+
+.Rightbuttons {
+  float: right;
+}
+
+.Rightsonginfo {
+  text-align: right;
+  float: right;
+}
+
+.dropdown-item {
+  cursor: pointer;
 }
 
 .fa-large {
@@ -58,15 +110,6 @@
   font-size: 1.5em;
 }
 
-.Left-Deck {
-  float: left;
-}
-
-.Right-Deck {
-  float: right;
-}
-
-
 .VoteScreen {
   position: absolute;
   float: left;
@@ -90,11 +133,6 @@
   left: 200px;
 }
 
-
-
-.main {
-  position: relative;
-}
 */
 
 input[type=range][orient=vertical]
@@ -113,4 +151,14 @@ input[type=range][orient=vertical]
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
+}
+
+.btn-circle {
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  padding: 6px 0;
+  font-size: 12px;
+  line-height: 1.428571429;
+  border-radius: 15px;
 }

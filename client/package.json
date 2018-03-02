@@ -11,10 +11,14 @@
   },
   "dependencies": {
     "bootstrap": "^4.0.0",
+    "jquery": "^3.3.1",
     "nouislider": "^11.0.3",
+    "popper": "^1.0.1",
+    "popper.js": "^1.12.9",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
-    "socket.io-client": "^2.0.4"
+    "socket.io-client": "^2.0.4",
+    "wnumb": "^1.1.0"
   },
   "scripts": {
     "start": "react-scripts start",
