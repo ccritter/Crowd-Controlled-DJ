@@ -11,7 +11,7 @@ export default class Queue extends Component {
       <div className="Queue">
         {this.props.songs.map((song) => {
           return (
-            <QueuedSong song={song} socket={this.props.socket} room={this.props.room}/>
+            <QueuedSong song={song} socket={this.props.socket} room={this.props.room} mode={this.props.mode}/>
           );
         })}
       </div>

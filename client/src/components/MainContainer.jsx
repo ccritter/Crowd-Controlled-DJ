@@ -28,8 +28,8 @@ export default class MainContainer extends Component {
     let content;
     let searchResults = <SearchResults socket={this.props.socket} results={this.state.results} room={this.props.room}/>;
     let closeButton =
-      <button type="button" className="close" onClick={this.hideResults} aria-label="Close">
-        <span aria-hidden="true">&times;</span>
+      <button type="button" className="btn btn-circle" onClick={this.hideResults} aria-label="Close">
+        <i className="fa fa-times"/>
       </button>
 
     // TODO: BIG ASS BUG!! When results are visible for the DJ, the decks are gone and so audio stops and the iframe is reloaded. Move players/data out of the decks? or just draw the results on top?
@@ -42,9 +42,13 @@ export default class MainContainer extends Component {
       // User is a host. See if search results should be displayed:
       if (this.state.resultsAreVisible) {
         content =
-          <div>
-            {closeButton}
-            {searchResults}
+          <div className="row">
+            <div className="col-1">
+              {closeButton}
+            </div>
+            <div className="col-11">
+              {searchResults}
+            </div>
           </div>;
       } else {
         content = <Turntable room={this.props.room}/>;
@@ -57,6 +61,7 @@ export default class MainContainer extends Component {
           <VoteScreen socket={this.props.socket}
                       songlist={this.props.songlist}
                       room={this.props.room}
+                      mode={this.props.mode}
                       sendResults={this.showResults}/>
           <div className="col-sm-12 main">
             <Topbar room={this.props.room}/>

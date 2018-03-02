@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+const wNumb = require('wnumb');
 const noUiSlider = require('nouislider');
 
 export default class Deck extends Component {
@@ -6,14 +7,12 @@ export default class Deck extends Component {
     super(props);
 
     this.state = {
-      currentSong: '', // Stores the id of the currently playing song
-      playerState: -1
+      playerState: -1,
+      vidready: false
     };
 
     this.loadNewSong = this.loadNewSong.bind(this);
     this.playOrPause = this.playOrPause.bind(this);
-    this.setPlaySpeed = this.setPlaySpeed.bind(this);
-    this.setVolume = this.setVolume.bind(this);
     this.mute = this.mute.bind(this);
     // TODO: Check if this needs to be bound once adding from queue is implemented
     this.onPlayerStateChange = this.onPlayerStateChange.bind(this);
@@ -51,16 +50,15 @@ export default class Deck extends Component {
 
    */
 
-  componentDidMount() {
-    // TODO: This is only here for testing, get rid of it eventually
-    this.loadNewSong({
-      id: 'dQw4w9WgXcQ',
-      title: 'Rick Astley - Never Gonna Give You Up',
-      thumbnail: 'https://i.ytimg.com/vi/dQw4w9WgXcQ/0.jpg'
-    });
+  componentDidUpdate(prevProps) {
+    if (prevProps.currentSong !== this.props.currentSong) {
+      this.loadNewSong(this.props.currentSong);
+    }
   }
 
   loadNewSong(song) {
+    this.setState({ vidready: false });
+
     let load = new Promise((resolve) => {
       this.player = new window.YT.Player(this.ytcontainer, {
         height: '0',
@@ -78,29 +76,67 @@ export default class Deck extends Component {
     });
 
     load.then((success) => {
-      this.setState({ currentSong: song });
+      this.setState({ vidready: true });
       // I put this here because I thought it might start buffering the video, making it so the first "play" click isn't delayed. It may not work though.
       this.player.playVideo();
       this.player.pauseVideo();
 
+      // Init volume slider
+      let volslider = document.getElementById(this.props.side + "volume");
+      volslider.style.height = '300px';
+      noUiSlider.create(volslider, {
+        start: 80,
+        orientation: 'vertical',
+        direction: 'rtl',
+        connect: [true, false],
+        range: {
+          'min': 0,
+          'max': 100
+        }
+      });
+
+      volslider.noUiSlider.on('update', (values) => {
+        this.player.setVolume(values[0]);
+      });
+
+      // Init speed slider
+      let speedslider = document.getElementById(this.props.side + "speed");
+      speedslider.style.width = '400px';
+      noUiSlider.create(speedslider, {
+        start: 1,
+        range: {
+          'min': [0.5, .25],
+          '82%': [1.5, .5],
+          'max': [2]
+        },
+        pips: {
+          mode: 'steps',
+          filter: () => 1,
+          format: wNumb({ decimals: 2 }),
+          density: 100
+        }
+      });
+      speedslider.noUiSlider.on('update', (values) => {
+        console.log(values[0]);
+        this.player.setPlaybackRate(values[0]);
+      });
+
+      // Init playhead slider/controls
       // TODO: Make sure this doesn't break when loading a new song. May have to delete it and readd it or something
-      let slider = document.getElementById(this.props.side + "pheadcontrols");
-      slider.style.width = '400px';
-      noUiSlider.create(slider, {
-        start: [20, 80],
+      let playslider = document.getElementById(this.props.side + "pheadcontrols");
+      playslider.style.width = '400px';
+      noUiSlider.create(playslider, {
+        start: [0, 50, this.player.getDuration()],
         connect: true,
         range: {
           'min': 0,
           'max': this.player.getDuration()
         }
       });
-
-      slider.noUiSlider.on('update', function(values, handle) {
-        this.target.setAttribute('handle-num', handle);
-
-        if (handle === 0) {
+      playslider.noUiSlider.on('set', (values, handle) => {
+        if (handle === 1) {
           // "Start" handle has been updated/set
-
+          this.player.seekTo(values[1], true);
         }
       });
     });
@@ -126,51 +162,61 @@ export default class Deck extends Component {
     }
   }
 
-  setPlaySpeed(event) {
-    let rates = [.5, .75, 1, 1.25, 1.5, 2];
-    this.player.setPlaybackRate(rates[event.target.value]);
-  }
-
-  setVolume(event) {
-    this.player.setVolume(event.target.value);
-  }
-
-  setMarker(num) {
-
-  }
-
   // TODO: use icons for play pause etc
   // TODO: Make play/pause and lock buttons a toggle. Eventually same for loops and stuff.
   render() {
     return (
-      <div className={this.props.side + "-Deck col"}>
+      <div className={this.props.side + "-Deck col d-flex" + (this.props.side === "Right" ? " justify-content-end" : " justify-content-start")}>
         <div ref={(r) => { this.ytcontainer = r }}/>
-        {this.state.currentSong ?
+        {this.props.currentSong && this.state.vidready ?
           <div>
             <div className="row">
-              <img src={this.state.currentSong.thumbnail} />
-              {this.state.currentSong.title}
-              {this.state.currentSong.channelName}
-              {this.player.getDuration()} seconds (convert this to (H:)MM:SS)
-            </div>
-            <input type="range" orient="vertical" min="0" max="100" defaultValue="80" onInput={this.setVolume}/>
-            <button onClick={this.mute} className="btn btn-default">Mute</button>
-            <input type="range" name="speed" min="0" max="5" defaultValue="2" onInput={this.setPlaySpeed}/>
-            <div className="row">
-              <div className="btn-group" role="group">
-                <button onClick={this.playOrPause} className="btn btn-default" aria-label="Play/Pause">
-                  {this.state.playerState === 1 ?
-                    'Pause'
-                  :
-                    'Play'
-                  }
-                </button>
-                <button className="btn btn-default">Eject</button>
-                <button className="btn btn-default">Lock</button>
+              <div className="col">
+                <div className={this.props.side + "thumb row"}>
+                  <img src={this.props.currentSong.thumbnail} />
+                </div>
+                <div className={this.props.side + "songinfo row mb-5"}>
+                  {this.props.currentSong.title}
+                  <br/>
+                  {this.props.currentSong.channelName} - {this.player.getDuration()} seconds
+                </div>
+                <div className={this.props.side + "buttons row mb-5"}>
+                  <div className="btn-group" role="group">
+                    <button onClick={this.playOrPause} className="btn btn-default" aria-label="Play/Pause" title="Play/Pause">
+                      {this.state.playerState === 1 ?
+                        <i className="fa fa-pause"/>
+                      :
+                        <i className="fa fa-play"/>
+                      }
+                    </button>
+                    <button className="btn btn-default" title="Remove from deck">
+                      <i className="fa fa-eject"/>
+                    </button>
+                    <button className="btn btn-default" title="Autoplay lock">
+                      <i className="fa fa-lock"/>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div className={this.props.side + "volume col mb-5"}>
+                <div className="row">
+                  <div id={this.props.side + "volume"} className="noUiSlider"/>
+                </div>
+                <div className="row">
+                  <button onClick={this.mute} className="btn btn-default" title="Mute">
+                    <i className="fa fa-volume-off"/>
+                  </button>
+                </div>
               </div>
             </div>
-            <div className="row">
-              <div id={this.props.side + "pheadcontrols"} className="noUiSlider"/>
+
+            <div className="row mb-5">
+              <p>Speed:</p>
+              <div id={this.props.side + "speed"} className="noUiSlider ml-5"/>
+            </div>
+            <div className="row mb-3">
+              <p>Playhead:</p>
+              <div id={this.props.side + "pheadcontrols"} className="noUiSlider ml-3"/>
             </div>
             <div className="row">
               <div className="btn-toolbar" role="toolbar">
@@ -178,17 +224,18 @@ export default class Deck extends Component {
                   <button className="btn btn-default">Loop</button>
                 </div>
                 <div className="btn-group mr-5" role="group">
-                  <button className="btn btn-default">In</button>
-                  <button className="btn btn-default">Out</button>
+                  <button className="btn btn-default">Start</button>
+                  <button className="btn btn-default">End</button>
                 </div>
-                <div className="btn-group mr-2" role="group">
-                  <button className="btn btn-default">Set</button>
-                </div>
-                <div className="btn-group" role="group">
-                  <button className="btn btn-default">A</button>
-                  <button className="btn btn-default">B</button>
-                  <button className="btn btn-default">C</button>
-                </div>
+                {/* TODO: For now, we'll just not have these implemented until we work it out */}
+                {/*<div className="btn-group mr-2" role="group">*/}
+                  {/*<button className="btn btn-default">Set</button>*/}
+                {/*</div>*/}
+                {/*<div className="btn-group" role="group">*/}
+                  {/*<button className="btn btn-default">A</button>*/}
+                  {/*<button className="btn btn-default">B</button>*/}
+                  {/*<button className="btn btn-default">C</button>*/}
+                {/*</div>*/}
               </div>
             </div>
           </div>
