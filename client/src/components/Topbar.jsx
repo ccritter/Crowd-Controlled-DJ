@@ -42,7 +42,12 @@ export default class Topbar extends Component {
                   {/* <img src={logo} className="App-logo" alt="logo" />*/}
                   <h1 className="App-title text-center">YouMix</h1>
               </div>
-              <div className="col-2 offset-2">
+              <div className="col-2">
+                <button type="button" className="btn btn-default" onClick="" title="Exit Room">
+                  Leave
+                </button>
+              </div>
+              <div className="col-2">
                   <p className="mb-1">Room code:</p>
                   <p className="mb-0">{this.props.room}</p>
               </div>
