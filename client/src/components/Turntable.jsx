@@ -72,7 +72,7 @@ export default class Turntable extends Component {
 
   render() {
     return (
-      <div className="Turntable">
+      <div className={(this.props.hidden ? "d-none " : "") + "Turntable"}>
         {!this.state.ytready ?
           <p>Loading...</p>
           :

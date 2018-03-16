@@ -18,3 +18,4 @@ To run:
 Style standards:
 - I like having explicit semicolons
 - Class method binding should be done in the constructor instead of as an arrow function. I'm willing to negotiate this but this is the standard I'm currently following.
+- My IDE uses 2 space indents, so we may as well use that.

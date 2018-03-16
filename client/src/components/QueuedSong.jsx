@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-// import '../../node_modules/bootstrap/dist/js/bootstrap'
+import Dotdotdot from 'react-dotdotdot'
 require('bootstrap');
 
 export default class QueuedSong extends Component {
@@ -20,21 +20,16 @@ export default class QueuedSong extends Component {
 
   render() {
     return (
-      <div className="QueuedSong container">
+      <div className="QueuedSong container border-bottom border-dark pt-2 pb-2">
         <div className="row">
           <div className="col-4">
             <img src={this.props.song.thumbnail} alt="thumbnail" />
           </div>
           <div className="col-6">
-            {/*<p className="mb-1">{this.props.song.id}</p>*/}
-            <p title={this.props.song.title} className="mb-1">{this.props.song.title.length < 35 ?
-                this.props.song.title
-              :
-                this.props.song.title.substring(0, 35) + "..."}</p>
-            <p title={this.props.song.channelName} className="mb-0">{this.props.song.channelName.length < 20 ?
-              this.props.song.channelName
-              :
-              this.props.song.channelName.substring(0, 20) + "..."}</p>
+            <Dotdotdot clamp={3}>
+              <p title={this.props.song.title} className="mb-1">{this.props.song.title}</p>
+            </Dotdotdot>
+            <p title={this.props.song.channelName} className="mb-0 text-truncate channel-name">{this.props.song.channelName}</p>
           </div>
           <div className="col-1 align-self-center">
             <div className="row align-items-center flex-column">

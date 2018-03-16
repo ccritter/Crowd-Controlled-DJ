@@ -43,15 +43,6 @@ class App extends Component {
     // this.testInit(); // TODO: Get rid of this and the corresponding function. Only still here for reference
     this.loadYoutubeDataApi();
 
-    // TODO: consolidate these two functions? they are identical. We will see
-    // socket.on('song added', (songlist) => {
-    //   this.setState({ songlist: songlist });
-    // });
-    //
-    // socket.on('welcome', (songlist) => {
-    //   this.setState({ songlist: songlist });
-    // });
-
     // TODO: This is wildly inefficient, as we will get a new list every time someone upvotes, downvotes, or submits a new song. Keeping it simple for this project though.
     socket.on('receive songlist', (songlist) => {
       this.setState({ songlist: songlist });

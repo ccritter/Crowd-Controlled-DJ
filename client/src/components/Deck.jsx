@@ -162,7 +162,6 @@ export default class Deck extends Component {
     }
   }
 
-  // TODO: use icons for play pause etc
   // TODO: Make play/pause and lock buttons a toggle. Eventually same for loops and stuff.
   render() {
     return (
@@ -178,7 +177,7 @@ export default class Deck extends Component {
                 <div className={this.props.side + "songinfo row mb-5"}>
                   {this.props.currentSong.title}
                   <br/>
-                  {this.props.currentSong.channelName} - {this.player.getDuration()} seconds
+                  <p className="channel-name">{this.props.currentSong.channelName} - {this.player.getDuration()} seconds</p>
                 </div>
                 <div className={this.props.side + "buttons row mb-5"}>
                   <div className="btn-group" role="group">

@@ -69,7 +69,7 @@ io.on('connection', socket => {
     socket.join(roomID);
     rooms[roomID].djID = socket.id;
     rooms[roomID].songlist = [];
-    cb(roomID); // maybe make a room init function, and add functions like getTopSong()
+    cb(roomID); // TODO: maybe make a room init function, and add functions like getTopSong()
   });
 
   socket.on("addsong", (song, roomID) => {

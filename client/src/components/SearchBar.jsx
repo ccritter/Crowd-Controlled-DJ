@@ -14,7 +14,7 @@ export default class SearchBar extends Component {
     let request = gapi.client.youtube.search.list({
       type: 'video',
       videoEmbeddable: true,
-      maxResults: 8,
+      maxResults: 12,
       part: 'snippet',
       q: query
     });
@@ -35,12 +35,13 @@ export default class SearchBar extends Component {
   render() {
     return (
       <div className="SearchBar">
-        <form onSubmit={this.search}>
+        <form className="input-group" onSubmit={this.search}>
           <input
             type="text"
+            className="form-control"
             placeholder="Song Search"
             ref={(input) => this.input = input}/>
-          <button type="submit">Search</button>
+          <button className="btn btn-default" type="submit">Search</button>
         </form>
       </div>
     );

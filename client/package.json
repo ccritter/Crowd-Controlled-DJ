@@ -17,6 +17,7 @@
     "popper.js": "^1.12.9",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
+    "react-dotdotdot": "^1.2.3",
     "socket.io-client": "^2.0.4",
     "wnumb": "^1.1.0"
   },

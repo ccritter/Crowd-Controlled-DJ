@@ -87,6 +87,16 @@ body {
   cursor: pointer;
 }
 
+.SearchResults {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding-right: 40px;
+  padding-left: 440px;
+  padding-top: 100px;
+
+}
+
 /*
 .App {
   text-align: center;
@@ -166,3 +176,8 @@ input[type=range][orient=vertical]
   line-height: 1.428571429;
   border-radius: 15px;
 }
+
+.channel-name {
+  font-size: 0.75rem;
+}
+
