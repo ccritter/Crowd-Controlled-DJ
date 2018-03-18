@@ -188,8 +188,8 @@ export default class Deck extends Component {
                         <i className="fa fa-play"/>
                       }
                     </button>
-                    <button className="btn btn-default" title="Remove from deck">
-                      <i className="fa fa-eject"/>
+                    <button className="btn btn-default" title="Load the next top rated song">
+                      <i className="fa fa-forward"/>
                     </button>
                     <button className="btn btn-default" title="Autoplay lock">
                       <i className="fa fa-lock"/>
