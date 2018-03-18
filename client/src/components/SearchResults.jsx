@@ -50,7 +50,7 @@ export default class SearchResults extends Component {
                     title: title,
                     channelName: channelName,
                     thumbnail: thumbnail }) }}>
-                      Suggest to Queue
+                      Add to Queue
                   </button>
                 </div>
               </div>

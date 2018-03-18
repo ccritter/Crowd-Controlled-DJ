@@ -39,7 +39,7 @@ export default class SearchBar extends Component {
           <input
             type="text"
             className="form-control"
-            placeholder="Song Search"
+            placeholder="Search for a song"
             ref={(input) => this.input = input}/>
           <button className="btn btn-default" type="submit">Search</button>
         </form>

@@ -8,31 +8,21 @@ export default class Deck extends Component {
 
     this.state = {
       playerState: -1,
-      vidready: false
+      vidready: false,
+      playheadTimer: null
     };
 
     this.loadNewSong = this.loadNewSong.bind(this);
     this.playOrPause = this.playOrPause.bind(this);
     this.mute = this.mute.bind(this);
-    // TODO: Check if this needs to be bound once adding from queue is implemented
+    // TODO: Check if these need to be bound once adding from queue is implemented
     this.onPlayerStateChange = this.onPlayerStateChange.bind(this);
+    this.onPlayerRateChange = this.onPlayerRateChange.bind(this);
   }
 
   /*
   Necessary API Functions:
-  player.playVideo()
-  player.pauseVideo()
-  player.seekTo(seconds:Number, allowSeekAhead:Boolean)
-  player.mute()
-  player.unMute()
-  player.isMuted()
-  player.setVolume(volume:Number)
-  player.getVolume()
-  player.setPlaybackRate(suggestedRate:Number)
   player.getAvailablePlaybackRates() - potentially not necessary. We'll see.
-  player.getPlayerState() - Maybe
-  player.getCurrentTime()
-  player.getDuration()
 
   Player parameters to set:
   autoplay = 0 if normal, 1 if autoplay mode
@@ -47,7 +37,6 @@ export default class Deck extends Component {
   start = 0:00
 
   Use componentWillReceiveProps to reset to default? or just get values from the player itself?
-
    */
 
   componentDidUpdate(prevProps) {
@@ -70,6 +59,7 @@ export default class Deck extends Component {
         },
         events: {
           onStateChange: this.onPlayerStateChange,
+          onPlaybackRateChange: this.onPlayerRateChange,
           onReady: resolve
         }
       });
@@ -85,7 +75,7 @@ export default class Deck extends Component {
       let volslider = document.getElementById(this.props.side + "volume");
       volslider.style.height = '300px';
       noUiSlider.create(volslider, {
-        start: 80,
+        start: this.player.getVolume(),
         orientation: 'vertical',
         direction: 'rtl',
         connect: [true, false],
@@ -117,7 +107,6 @@ export default class Deck extends Component {
         }
       });
       speedslider.noUiSlider.on('update', (values) => {
-        console.log(values[0]);
         this.player.setPlaybackRate(values[0]);
       });
 
@@ -126,17 +115,23 @@ export default class Deck extends Component {
       let playslider = document.getElementById(this.props.side + "pheadcontrols");
       playslider.style.width = '400px';
       noUiSlider.create(playslider, {
-        start: [0, 50, this.player.getDuration()],
+        start: [0, 0, this.player.getDuration()],
         connect: true,
         range: {
           'min': 0,
           'max': this.player.getDuration()
         }
       });
-      playslider.noUiSlider.on('set', (values, handle) => {
+      playslider.noUiSlider.on('change', (values, handle) => {
         if (handle === 1) {
           // "Start" handle has been updated/set
           this.player.seekTo(values[1], true);
+        }
+      });
+      playslider.noUiSlider.on('start', (values, handle) => {
+        if (handle === 1) {
+          // "Start" handle has grabbed
+          clearInterval(this.state.playheadTimer);
         }
       });
     });
@@ -144,6 +139,19 @@ export default class Deck extends Component {
 
   onPlayerStateChange(e) {
     this.setState({ playerState: e.data });
+
+    if (e.data === window.YT.PlayerState.PLAYING) {
+      let slider = document.getElementById(this.props.side + "pheadcontrols");
+      this.state.playheadTimer = setInterval(() => {
+        slider.noUiSlider.set([null, this.player.getCurrentTime(), null]);
+      }, (1000*this.player.getPlaybackRate()));
+    } else {
+      clearInterval(this.state.playheadTimer);
+    }
+  }
+
+  onPlayerRateChange(e) {
+    setInterval(this.state.playheadTimer, (1000*this.player.getPlaybackRate()));
   }
 
   playOrPause() {
@@ -188,11 +196,11 @@ export default class Deck extends Component {
                         <i className="fa fa-play"/>
                       }
                     </button>
-                    <button className="btn btn-default" title="Load the next top rated song">
-                      <i className="fa fa-forward"/>
-                    </button>
                     <button className="btn btn-default" title="Autoplay lock">
                       <i className="fa fa-lock"/>
+                    </button>
+                    <button className="btn btn-default" title="Load the next top rated song">
+                      <i className="fa fa-forward"/>
                     </button>
                   </div>
                 </div>
