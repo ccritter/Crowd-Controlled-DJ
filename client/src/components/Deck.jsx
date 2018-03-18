@@ -134,6 +134,11 @@ export default class Deck extends Component {
           clearInterval(this.state.playheadTimer);
         }
       });
+      let handles = playslider.querySelectorAll(".noUi-handle");
+      handles[0].classList.add("barhandle");
+      handles[1].classList.add("playheadhandle");
+      handles[2].classList.add("barhandle");
+      console.log(handles);
     });
   }
 

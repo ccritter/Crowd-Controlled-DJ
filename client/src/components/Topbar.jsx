@@ -49,7 +49,7 @@ export default class Topbar extends Component {
               <h1 className="App-title text-center">YouMix</h1>
             </div>
             <div className="col-2">
-              <button type="button" className="btn btn-default" onClick="" title="Exit Room">
+              <button type="button" className="btn btn-default" onClick={this.props.leaveRoom} title="Exit Room">
                 Leave
               </button>
             </div>

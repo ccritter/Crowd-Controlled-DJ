@@ -19,7 +19,6 @@ export default class SearchResults extends Component {
   }
 
   render() {
-    // TODO: Text clamping? Youtube titles are only up to 100 chars anyway. May be better to just make better fixed sizes for the title area
     return (
       <div className={(this.props.visible ? "" : "d-none ") + "SearchResults"}>
         <div className="row">

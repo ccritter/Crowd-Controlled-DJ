@@ -62,7 +62,7 @@ export default class MainContainer extends Component {
                       mode={this.props.mode}
                       sendResults={this.showResults}/>
           <div className="col-sm-12 main">
-            <Topbar room={this.props.room} mode={this.props.mode}/>
+            <Topbar room={this.props.room} mode={this.props.mode} leaveRoom={this.props.leaveRoom}/>
             {this.props.mode === 2 ? <Turntable hidden={this.state.resultsAreVisible} room={this.props.room}/> : ""}
             <SearchResults visible={this.state.resultsAreVisible}
                            socket={this.props.socket}

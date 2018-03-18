@@ -21,6 +21,7 @@ class App extends Component {
 
     this.changeMode = this.changeMode.bind(this);
     this.changeRoom = this.changeRoom.bind(this);
+    this.leaveRoom = this.leaveRoom.bind(this);
   }
 
   loadYoutubeDataApi() {
@@ -63,6 +64,11 @@ class App extends Component {
     this.setState({ room: room});
   }
 
+  leaveRoom() {
+    this.setState({ mode: 0});
+    this.setState({ room: ''});
+  }
+
   render() {
     return (
       <div className="App">
@@ -74,7 +80,8 @@ class App extends Component {
           <MainContainer socket={socket}
                          songlist={this.state.songlist}
                          room={this.state.room}
-                         mode={this.state.mode} />
+                         mode={this.state.mode}
+                         leaveRoom={this.leaveRoom}/>
         }
       </div>
     );
