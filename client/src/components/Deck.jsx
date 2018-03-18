@@ -9,7 +9,9 @@ export default class Deck extends Component {
     this.state = {
       playerState: -1,
       vidready: false,
-      playheadTimer: null
+      playheadTimer: null,
+      isMuted: 0,
+      isLocked: 1
     };
 
     this.loadNewSong = this.loadNewSong.bind(this);
@@ -169,8 +171,10 @@ export default class Deck extends Component {
 
   mute() {
     if (this.player.isMuted()) {
+      this.setState({ isMuted: 0 });
       this.player.unMute();
     } else {
+      this.setState({ isMuted: 1 });
       this.player.mute();
     }
   }
@@ -201,7 +205,7 @@ export default class Deck extends Component {
                         <i className="fa fa-play"/>
                       }
                     </button>
-                    <button className="btn btn-default" title="Autoplay lock">
+                    <button className={"btn btn-" + (this.state.isLocked === 1 ? "secondary" : "default")} title="Autoplay lock">
                       <i className="fa fa-lock"/>
                     </button>
                     <button className="btn btn-default" title="Load the next top rated song">
@@ -215,7 +219,7 @@ export default class Deck extends Component {
                   <div id={this.props.side + "volume"} className="noUiSlider"/>
                 </div>
                 <div className="row">
-                  <button onClick={this.mute} className="btn btn-default" title="Mute">
+                  <button onClick={this.mute} className={"btn btn-" + (this.state.isMuted === 1 ? "secondary" : "default")} title="Mute">
                     <i className="fa fa-volume-off"/>
                   </button>
                 </div>
