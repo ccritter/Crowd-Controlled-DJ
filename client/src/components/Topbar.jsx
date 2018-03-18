@@ -10,7 +10,7 @@ export default class Topbar extends Component {
     if (this.props.mode === 2) {
       // Init master volume slider
       let volslider = document.getElementById("mastervol");
-      volslider.style.width = '300px';
+      volslider.style.width = '150px';
       noUiSlider.create(volslider, {
         start: 80,
         connect: [true, false],
@@ -28,17 +28,14 @@ export default class Topbar extends Component {
 
   render() {
     return (
-      <div className="Topbar navbar navbar-inverse">
-        <div className="w-100 d-flex align-items-center">
+        <div className="Topbar navbar navbar-inverse row align-items-center">
           {this.props.mode === 2 ?
-            <div className="row mr-5">
-              <div className="col-1 mr-5">
-                <button type="button" className="btn btn-default" onClick="" title="Master play/pause">
-                  <i className="fa fa-pause"/>
-                  <i className="fa fa-play d-none"/>
-                </button>
-              </div>
-              <div className="col-6">
+            <div className="col-4">
+              <button type="button" className="btn btn-default mr-3 d-inline-block" onClick="" title="Master play/pause">
+                <i className="fa fa-pause"/>
+                <i className="fa fa-play d-none"/>
+              </button>
+              <div className="d-inline-block">
                 <div id="mastervol" className="noUiSlider"/>
               </div>
             </div>
@@ -58,7 +55,6 @@ export default class Topbar extends Component {
               <b className="mb-0">{this.props.room}</b>
             </div>
         </div>
-      </div>
     );
   }
 }
