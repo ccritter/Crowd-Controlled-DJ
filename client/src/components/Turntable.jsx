@@ -77,12 +77,16 @@ export default class Turntable extends Component {
           <p>Loading...</p>
           :
           <div className="row">
-            <Deck side="Left" currentSong={this.state.song1}/>
+            <div className="col-6">
+              <Deck side="Left" currentSong={this.state.song1}/>
+            </div>
             <div className="xfader">
               <p>Crossfade:</p>
               <div id="xfade" className="noUiSlider"/>
             </div>
-            <Deck side="Right" currentSong={this.state.song2}/>
+            <div className="col-6">
+              <Deck side="Right" currentSong={this.state.song2}/>
+            </div>
           </div>
         }
       </div>

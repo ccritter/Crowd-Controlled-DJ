@@ -75,7 +75,7 @@ export default class Deck extends Component {
 
       // Init volume slider
       let volslider = document.getElementById(this.props.side + "volume");
-      volslider.style.height = '300px';
+      volslider.style.height = '250px';
       noUiSlider.create(volslider, {
         start: this.player.getVolume(),
         orientation: 'vertical',
@@ -93,7 +93,7 @@ export default class Deck extends Component {
 
       // Init speed slider
       let speedslider = document.getElementById(this.props.side + "speed");
-      speedslider.style.width = '400px';
+      speedslider.style.width = '300px';
       noUiSlider.create(speedslider, {
         start: 1,
         range: {
@@ -115,7 +115,7 @@ export default class Deck extends Component {
       // Init playhead slider/controls
       // TODO: Make sure this doesn't break when loading a new song. May have to delete it and readd it or something
       let playslider = document.getElementById(this.props.side + "pheadcontrols");
-      playslider.style.width = '400px';
+      playslider.style.width = '300px';
       noUiSlider.create(playslider, {
         start: [0, 0, this.player.getDuration()],
         connect: true,
@@ -182,21 +182,21 @@ export default class Deck extends Component {
   // TODO: Make play/pause and lock buttons a toggle. Eventually same for loops and stuff.
   render() {
     return (
-      <div className={this.props.side + "-Deck col d-flex" + (this.props.side === "Right" ? " justify-content-end" : " justify-content-start")}>
+      <div className={this.props.side + "-Deck d-flex " + (this.props.side === "Right" ? "justify-content-end" : "justify-content-start")}>
         <div ref={(r) => { this.ytcontainer = r }}/>
         {this.props.currentSong && this.state.vidready ?
           <div>
             <div className="row">
-              <div className={"col" + (this.props.side === "Right" ? " order-2" : " order-1")}>
-                <div className={this.props.side + "thumb row"}>
+              <div className={"col-8 p-5" + (this.props.side === "Right" ? " order-2" : " order-1")}>
+                <div className={this.props.side + "thumb"}>
                   <img src={this.props.currentSong.thumbnail} />
                 </div>
-                <div className={this.props.side + "songinfo row mb-5"}>
+                <div className={this.props.side + "songinfo mb-5"}>
                   {this.props.currentSong.title}
                   <br/>
                   <p className="channel-name">{this.props.currentSong.channelName} - {this.player.getDuration()} seconds</p>
                 </div>
-                <div className={this.props.side + "buttons row mb-5"}>
+                <div className={this.props.side + "buttons mb-5"}>
                   <div className="btn-group" role="group">
                     <button onClick={this.playOrPause} className="btn btn-default" aria-label="Play/Pause" title="Play/Pause">
                       {this.state.playerState === 1 ?
@@ -214,32 +214,30 @@ export default class Deck extends Component {
                   </div>
                 </div>
               </div>
-              <div className={this.props.side + "volume col mb-5" + (this.props.side === "Right" ? " order-1" : " order-2")}>
-                <div className="row">
-                  <div id={this.props.side + "volume"} className="noUiSlider"/>
-                </div>
-                <div className="row">
-                  <button onClick={this.mute} className={"btn btn-" + (this.state.isMuted === 1 ? "secondary" : "default")} title="Mute">
+              <div className={this.props.side + "volume col-4 mt-5" + (this.props.side === "Right" ? " order-1" : " order-2")}>
+                <div className="d-flex flex-column justify-content-center mt-5">
+                  <div id={this.props.side + "volume"} className="noUiSlider m-2"/>
+                  <button onClick={this.mute} className={"btn btn-" + (this.state.isMuted === 1 ? "secondary" : "default") + " mt-2"} title="Mute">
                     <i className="fa fa-volume-off"/>
                   </button>
                 </div>
               </div>
             </div>
 
-            <div className="row mb-5">
-              <p>Speed:</p>
-              <div id={this.props.side + "speed"} className="noUiSlider ml-5"/>
+            <div className="row pl-5 pr-5 p-4 align-items-center flex-column">
+              <p className="mt-2">Speed:</p>
+              <div id={this.props.side + "speed"} className="noUiSlider"/>
             </div>
-            <div className="row mb-3">
-              <p>Playhead:</p>
-              <div id={this.props.side + "pheadcontrols"} className="noUiSlider ml-3"/>
+            <div className="row pl-5 pr-5 p-4 align-items-center flex-column">
+              <p className="mt-2">Playhead:</p>
+              <div id={this.props.side + "pheadcontrols"} className="noUiSlider"/>
             </div>
-            <div className="row">
+            <div className="row pl-5 pr-5 justify-content-center">
               <div className="btn-toolbar" role="toolbar">
                 <div className="btn-group mr-2" role="group">
                   <button className="btn btn-default">Loop</button>
                 </div>
-                <div className="btn-group mr-5" role="group">
+                <div className="btn-group" role="group">
                   <button className="btn btn-default">Start</button>
                   <button className="btn btn-default">End</button>
                 </div>
