@@ -62,19 +62,19 @@ export default class Turntable extends Component {
 
   render() {
     return (
-      <div className={(this.props.hidden ? "d-none " : "") + "Turntable"}>
+      <div className={(this.props.hidden ? "d-none " : "") + "Turntable h-85"}>
         {!this.state.ytready ?
           <p>Loading...</p>
           :
-          <div className="row">
-            <div className="col-6">
+          <div className="row h-100">
+            <div className="col-6 h-100">
               <Deck side="Left" currentSong={this.props.song1} socket={this.props.socket} room={this.props.room}/>
             </div>
             <div className="xfader">
               <p>Crossfade:</p>
               <div id="xfade" className="noUiSlider"/>
             </div>
-            <div className="col-6">
+            <div className="col-6 h-100">
               <Deck side="Right" currentSong={this.props.song2} socket={this.props.socket} room={this.props.room}/>
             </div>
           </div>

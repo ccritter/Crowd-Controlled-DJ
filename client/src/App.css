@@ -173,3 +173,12 @@ body {
 .playheadhandle:after {
   display: none;
 }
+
+.empty-state {
+  border: 2px gray dashed;
+  color: gray;
+}
+
+.h-85 {
+  height: 85% !important;
+}

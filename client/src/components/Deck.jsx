@@ -188,7 +188,7 @@ export default class Deck extends Component {
   // The problem with the above is that if you change the playhead or something, everything gets thrown off. Figure this out.
   render() {
     return (
-      <div className={this.props.side + "-Deck d-flex " + (this.props.side === "Right" ? "justify-content-end" : "justify-content-start")}>
+      <div className={this.props.side + "-Deck h-100 d-flex " + (this.props.side === "Right" ? "justify-content-end" : "justify-content-start")}>
         <div ref={(r) => { this.ytcontainer = r }}/>
         {this.props.currentSong && this.state.vidready ?
           <div>
@@ -260,8 +260,8 @@ export default class Deck extends Component {
             </div>
           </div>
           :
-          <div>
-            No song loaded
+          <div className="w-100 h-100 text-center p-5">
+            <p className="w-100 h-100 empty-state d-flex align-items-center justify-content-center"><span>No song loaded</span></p>
           </div>
         }
       </div>
