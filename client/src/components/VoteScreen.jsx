@@ -10,7 +10,9 @@ export default class VoteScreen extends Component {
 
   // TODO: we may want to observe this in testing: Does the auto-sort-by-vote-count bother the user? like if they're about to click "upvote" and it automatically reorders so you accidentally vote for something else
   // TODO: Also, we should provide some visual feedback to the user when they click the "add to queue" button as well as loading the search results
-  // TODO: Also, we need to render the room code and exit button on the QueueHeader somewhere. See the paper prototype
+  // TODO: Also, we need to render the room code and exit button on the QueueHeader somewhere when mobile. See the paper prototype
+  // TODO: Need to hide autoplay if not the host in mobile
+  // TODO: Make the search results header sticky so that it is always on top
   render() {
     return (
       <div className="VoteScreen border-right border-dark">
