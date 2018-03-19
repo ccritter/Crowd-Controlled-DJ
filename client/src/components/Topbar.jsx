@@ -30,13 +30,19 @@ export default class Topbar extends Component {
     return (
         <div className="Topbar navbar navbar-inverse row align-items-center">
           {this.props.mode === 2 ?
-            <div className="col-4">
-              <button type="button" className="btn btn-default mr-3 d-inline-block" onClick="" title="Master play/pause">
+            <div className="col-4 d-flex align-items-center">
+              <button type="button" className="btn btn-default mr-2 d-inline-block" onClick="" title="Master play/pause">
                 <i className="fa fa-pause"/>
                 <i className="fa fa-play d-none"/>
               </button>
+              <div className="d-inline-block mr-1">
+                <i className="fa fa-volume-down"/>
+              </div>
               <div className="d-inline-block">
                 <div id="mastervol" className="noUiSlider"/>
+              </div>
+              <div className="d-inline-block ml-1">
+                <i className="fa fa-volume-up"/>
               </div>
             </div>
           :
