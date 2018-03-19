@@ -168,6 +168,19 @@ io.on('connection', socket => {
     io.to(roomID).emit('receive songlist', sl);
     io.to(roomID).emit('play song deck 2', s);
   });
+
+  socket.on("next", (roomID, side) => {
+    let sl = rooms[roomID].songlist;
+    let s = sl[0];
+    sl.splice(0, 1);
+
+    if (side === "Left") {
+      io.to(roomID).emit('play song deck 1', s);
+    } else {
+      io.to(roomID).emit('play song deck 2', s);
+    }
+    io.to(roomID).emit('receive songlist', sl);
+  });
 });
 
 app.get('/api/test', (req, res) => {

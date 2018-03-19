@@ -211,10 +211,10 @@ export default class Deck extends Component {
                         <i className="fa fa-play"/>
                       }
                     </button>
-                    <button className={"btn btn-" + (this.state.isLocked === 1 ? "secondary" : "default")} title="Autoplay lock">
+                    <button className={"btn btn-" + (this.state.isLocked ? "secondary" : "default")} onClick={() => this.setState({ isLocked: !this.state.isLocked })} title="Don't remove this song when Autoplaying">
                       <i className="fa fa-lock"/>
                     </button>
-                    <button className="btn btn-default" title="Load the next top rated song">
+                    <button className="btn btn-default" title="Load the next top rated song" onClick={() => this.props.socket.emit('next', this.props.room, this.props.side)}>
                       <i className="fa fa-forward"/>
                     </button>
                   </div>

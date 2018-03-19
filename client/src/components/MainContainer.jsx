@@ -80,7 +80,7 @@ export default class MainContainer extends Component {
             </div>
           </div>
         }
-        {this.props.mode === 2 ? <Turntable hidden={this.state.resultsAreVisible} room={this.props.room} song1={this.props.song1} song2={this.props.song2} /> : null}
+        {this.props.mode === 2 ? <Turntable hidden={this.state.resultsAreVisible} socket={this.props.socket} room={this.props.room} song1={this.props.song1} song2={this.props.song2} /> : null}
       </div>
 
 

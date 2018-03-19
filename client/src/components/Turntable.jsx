@@ -68,14 +68,14 @@ export default class Turntable extends Component {
           :
           <div className="row">
             <div className="col-6">
-              <Deck side="Left" currentSong={this.props.song1}/>
+              <Deck side="Left" currentSong={this.props.song1} socket={this.props.socket} room={this.props.room}/>
             </div>
             <div className="xfader">
               <p>Crossfade:</p>
               <div id="xfade" className="noUiSlider"/>
             </div>
             <div className="col-6">
-              <Deck side="Right" currentSong={this.props.song2}/>
+              <Deck side="Right" currentSong={this.props.song2} socket={this.props.socket} room={this.props.room}/>
             </div>
           </div>
         }
