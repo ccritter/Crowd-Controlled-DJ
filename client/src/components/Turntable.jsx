@@ -8,9 +8,7 @@ export default class Turntable extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      ytready: false,
-      song1: null,
-      song2: null
+      ytready: false
     };
   }
 
@@ -46,28 +44,20 @@ export default class Turntable extends Component {
       });
 
       // TODO: Get rid of this
-      this.sendSongToDeck({
-        id: 'dQw4w9WgXcQ',
-        title: 'Rick Astley - Never Gonna Give You Up',
-        channelName: 'YaBoiRickAstley',
-        thumbnail: 'https://i.ytimg.com/vi/dQw4w9WgXcQ/default.jpg'
-      }, false);
-
-      this.sendSongToDeck({
-        id: 'dQw4w9WgXcQ',
-        title: 'Rick Astley - Never Gonna Give You Up',
-        channelName: 'YaBoiRickAstley',
-        thumbnail: 'https://i.ytimg.com/vi/dQw4w9WgXcQ/default.jpg'
-      }, true);
+      // this.sendSongToDeck({
+      //   id: 'dQw4w9WgXcQ',
+      //   title: 'Rick Astley - Never Gonna Give You Up',
+      //   channelName: 'YaBoiRickAstley',
+      //   thumbnail: 'https://i.ytimg.com/vi/dQw4w9WgXcQ/default.jpg'
+      // }, false);
+      //
+      // this.sendSongToDeck({
+      //   id: 'dQw4w9WgXcQ',
+      //   title: 'Rick Astley - Never Gonna Give You Up',
+      //   channelName: 'YaBoiRickAstley',
+      //   thumbnail: 'https://i.ytimg.com/vi/dQw4w9WgXcQ/default.jpg'
+      // }, true);
     });
-  }
-
-  sendSongToDeck(song, num) {
-    if (!num) {
-      this.setState({ song1: song });
-    } else {
-      this.setState({ song2: song });
-    }
   }
 
   render() {
@@ -78,14 +68,14 @@ export default class Turntable extends Component {
           :
           <div className="row">
             <div className="col-6">
-              <Deck side="Left" currentSong={this.state.song1}/>
+              <Deck side="Left" currentSong={this.props.song1}/>
             </div>
             <div className="xfader">
               <p>Crossfade:</p>
               <div id="xfade" className="noUiSlider"/>
             </div>
             <div className="col-6">
-              <Deck side="Right" currentSong={this.state.song2}/>
+              <Deck side="Right" currentSong={this.props.song2}/>
             </div>
           </div>
         }

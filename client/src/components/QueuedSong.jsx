@@ -8,6 +8,9 @@ export default class QueuedSong extends Component {
 
     this.upvote = this.upvote.bind(this);
     this.downvote = this.downvote.bind(this);
+    this.removeSong = this.removeSong.bind(this);
+    this.sendSongToDeck1 = this.sendSongToDeck1.bind(this);
+    this.sendSongToDeck2 = this.sendSongToDeck2.bind(this);
   }
 
   upvote() {
@@ -16,6 +19,18 @@ export default class QueuedSong extends Component {
 
   downvote() {
     this.props.socket.emit('downvote', this.props.song, this.props.room);
+  }
+
+  removeSong() {
+    this.props.socket.emit('removesong', this.props.song, this.props.room);
+  }
+
+  sendSongToDeck1() {
+    this.props.socket.emit('sendtodeck1', this.props.song, this.props.room);
+  }
+
+  sendSongToDeck2() {
+    this.props.socket.emit('sendtodeck2', this.props.song, this.props.room);
   }
 
   render() {
@@ -53,10 +68,10 @@ export default class QueuedSong extends Component {
                     <i className="fa fa-ellipsis-h"/>
                   </button>
                   <div className="dropdown-menu">
-                    <a className="dropdown-item" onClick={() => alert("Song Added (not really)")}>Add to Deck 1</a>
-                    <a className="dropdown-item" onClick={() => alert("Song Added (not really)")}>Add to Deck 2</a>
+                    <a className="dropdown-item" onClick={this.sendSongToDeck1}>Add to Deck 1</a>
+                    <a className="dropdown-item" onClick={this.sendSongToDeck2}>Add to Deck 2</a>
                     <div className="dropdown-divider"/>
-                    <a className="dropdown-item" onClick={() => alert("Song Removed (not really)")}>Remove from Queue</a>
+                    <a className="dropdown-item" onClick={this.remove}>Remove from Queue</a>
                   </div>
                 </div>
               </div>

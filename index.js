@@ -72,6 +72,7 @@ io.on('connection', socket => {
     cb(roomID); // TODO: maybe make a room init function, and add functions like getTopSong()
   });
 
+  // Handle user add song requests
   socket.on("addsong", (song, roomID) => {
     if (rooms[roomID].songlist.find((s) => s.id === song.id)) {
       socket.emit('dupesong');
@@ -93,6 +94,7 @@ io.on('connection', socket => {
     }
   });
 
+  // Handle user upvote requests
   socket.on("upvote", (song, roomID) => {
     let sl = rooms[roomID].songlist;
     let idx = sl.findIndex((s) => s.id === song.id);
@@ -112,6 +114,7 @@ io.on('connection', socket => {
     io.to(roomID).emit('receive songlist', sl);
   });
 
+  // Handle user downvote requests
   socket.on("downvote", (song, roomID) => {
     let sl = rooms[roomID].songlist;
     let idx = sl.findIndex((s) => s.id === song.id);
@@ -134,6 +137,35 @@ io.on('connection', socket => {
       }
     }
     io.to(roomID).emit('receive songlist', sl);
+  });
+
+  // Handle user remove song requests
+  socket.on("removesong", (song, roomID) => {
+    let sl = rooms[roomID].songlist;
+    let idx = sl.findIndex((s) => s.id === song.id);
+    sl.splice(idx, 1);
+
+    io.to(roomID).emit('receive songlist', sl);
+  });
+
+  // Handle user send to deck 1 requests
+  socket.on("sendtodeck1", (song, roomID) => {
+    let sl = rooms[roomID].songlist;
+    let idx = sl.findIndex((s) => s.id === song.id);
+    let s = sl[idx];
+
+    io.to(roomID).emit('receive songlist', sl);
+    io.to(roomID).emit('play song deck 1', song);
+  });
+
+  // Handle user send to deck 2 requests
+  socket.on("sendtodeck2", (song, roomID) => {
+    let sl = rooms[roomID].songlist;
+    let idx = sl.findIndex((s) => s.id === song.id);
+    let s = sl[idx];
+
+    io.to(roomID).emit('receive songlist', sl);
+    io.to(roomID).emit('play song deck 2', song);
   });
 });
 

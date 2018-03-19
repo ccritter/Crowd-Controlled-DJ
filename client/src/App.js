@@ -16,7 +16,9 @@ class App extends Component {
     this.state = {
       mode: 0, // 0 is not in room, 1 is voter, 2 is DJ. This may be unnecessary if we get user state from the server.
       room: '',
-      songlist: []
+      songlist: [],
+      song1: null,
+      song2: null
     };
 
     this.changeMode = this.changeMode.bind(this);
@@ -47,6 +49,12 @@ class App extends Component {
     // TODO: This is wildly inefficient, as we will get a new list every time someone upvotes, downvotes, or submits a new song. Keeping it simple for this project though.
     socket.on('receive songlist', (songlist) => {
       this.setState({ songlist: songlist });
+    });
+    socket.on('play song deck 1', (song1) => {
+      this.setState({ song1: song1 });
+    });
+    socket.on('play song deck 2', (song2) => {
+      this.setState({ song2: song2 });
     });
   }
 
@@ -82,6 +90,8 @@ class App extends Component {
         <div className="App">
           <MainContainer socket={socket}
                          songlist={this.state.songlist}
+      song1={this.state.song1}
+      song2={this.state.song2}
                          room={this.state.room}
                          mode={this.state.mode}
                          leaveRoom={this.leaveRoom}/>
