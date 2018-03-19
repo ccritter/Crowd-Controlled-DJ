@@ -56,6 +56,8 @@ export default class MainContainer extends Component {
                         room={this.props.room}
                         mode={this.props.mode}
                         sendResults={this.showResults}
+                        isMobile={isMobile}
+                        leaveRoom={this.props.leaveRoom}
                         hideQueue={this.state.resultsAreVisible}/>
           </div>
         :
