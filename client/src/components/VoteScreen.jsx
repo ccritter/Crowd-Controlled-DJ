@@ -18,7 +18,7 @@ export default class VoteScreen extends Component {
           <div className="row d-flex justify-content-between px-3">
             <div className="col row">
               {this.props.isMobile ?
-                <button type="button" className="btn btn-circle" onClick={this.props.leaveRoom} aria-label="Close" title="Exit Room">
+                <button type="button" className="btn btn-circle" onClick={this.props.leaveRoom} aria-label="Exit" title="Exit Room">
                   <i className="fa fa-angle-left"/>
                 </button>
               :
