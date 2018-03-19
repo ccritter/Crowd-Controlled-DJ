@@ -10,8 +10,9 @@ export default class Deck extends Component {
       playerState: -1,
       vidready: false,
       playheadTimer: null,
-      isMuted: 0,
-      isLocked: 1
+      isMuted: false,
+      isLooping: false,
+      isLocked: false
     };
 
     this.loadNewSong = this.loadNewSong.bind(this);
@@ -24,7 +25,6 @@ export default class Deck extends Component {
 
   /*
   Necessary API Functions:
-  player.getAvailablePlaybackRates() - potentially not necessary. We'll see.
 
   Player parameters to set:
   autoplay = 0 if normal, 1 if autoplay mode
@@ -49,8 +49,11 @@ export default class Deck extends Component {
 
   loadNewSong(song) {
     this.setState({ vidready: false });
-
+    console.log(song);
     let load = new Promise((resolve) => {
+      if (this.player) {
+        this.player.destroy();
+      }
       this.player = new window.YT.Player(this.ytcontainer, {
         height: '0',
         width: '0',
@@ -68,6 +71,8 @@ export default class Deck extends Component {
     });
 
     load.then((success) => {
+      console.log("promise complete");
+
       this.setState({ vidready: true });
       // I put this here because I thought it might start buffering the video, making it so the first "play" click isn't delayed. It may not work though.
       this.player.playVideo();
@@ -140,7 +145,6 @@ export default class Deck extends Component {
       handles[0].classList.add("barhandle");
       handles[1].classList.add("playheadhandle");
       handles[2].classList.add("barhandle");
-      console.log(handles);
     });
   }
 
@@ -171,15 +175,17 @@ export default class Deck extends Component {
 
   mute() {
     if (this.player.isMuted()) {
-      this.setState({ isMuted: 0 });
       this.player.unMute();
+      this.setState({ isMuted: false });
     } else {
-      this.setState({ isMuted: 1 });
       this.player.mute();
+      this.setState({ isMuted: true });
     }
   }
 
   // TODO: Make play/pause and lock buttons a toggle. Eventually same for loops and stuff.
+  // TODO: Ok so here's how looping is going to work. We're going to check the distance between the start and end handles for the loop interval. Every tick, we set the playback to the location of the start handle
+  // The problem with the above is that if you change the playhead or something, everything gets thrown off. Figure this out.
   render() {
     return (
       <div className={this.props.side + "-Deck d-flex " + (this.props.side === "Right" ? "justify-content-end" : "justify-content-start")}>
@@ -217,7 +223,7 @@ export default class Deck extends Component {
               <div className={this.props.side + "volume col-4 mt-5" + (this.props.side === "Right" ? " order-1" : " order-2")}>
                 <div className="d-flex flex-column justify-content-center mt-5">
                   <div id={this.props.side + "volume"} className="noUiSlider m-2"/>
-                  <button onClick={this.mute} className={"btn btn-" + (this.state.isMuted === 1 ? "secondary" : "default") + " mt-2"} title="Mute">
+                  <button onClick={this.mute} className={"btn btn-" + (this.state.isMuted ? "secondary" : "default") + " mt-2"} title="Mute">
                     <i className="fa fa-volume-off"/>
                   </button>
                 </div>
@@ -235,11 +241,11 @@ export default class Deck extends Component {
             <div className="row pl-5 pr-5 justify-content-center">
               <div className="btn-toolbar" role="toolbar">
                 <div className="btn-group mr-2" role="group">
-                  <button className="btn btn-default">Loop</button>
+                  <button className={"btn btn-" + (this.state.isLooping ? "secondary" : "default")} onClick={() => this.setState({ isLooping: !this.state.isLooping })}>Loop</button>
                 </div>
                 <div className="btn-group" role="group">
-                  <button className="btn btn-default">Start</button>
-                  <button className="btn btn-default">End</button>
+                  <button className="btn btn-default" title="Set loop start point">Start</button>
+                  <button className="btn btn-default" title="Set loop end point">End</button>
                 </div>
                 {/* TODO: For now, we'll just not have these implemented until we work it out */}
                 {/*<div className="btn-group mr-2" role="group">*/}

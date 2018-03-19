@@ -33,7 +33,7 @@ export default class SplashScreen extends Component {
     socket.emit('joinroom', roomID, function(success) {
       if (success) {
         appstate(1);
-        changeroom(roomID);
+        changeroom(roomID.toLowerCase());
       }
       // TODO: else display some error message
     });

@@ -71,7 +71,7 @@ export default class QueuedSong extends Component {
                     <a className="dropdown-item" onClick={this.sendSongToDeck1}>Add to Deck 1</a>
                     <a className="dropdown-item" onClick={this.sendSongToDeck2}>Add to Deck 2</a>
                     <div className="dropdown-divider"/>
-                    <a className="dropdown-item" onClick={this.remove}>Remove from Queue</a>
+                    <a className="dropdown-item" onClick={this.removeSong}>Remove from Queue</a>
                   </div>
                 </div>
               </div>

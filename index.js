@@ -81,7 +81,6 @@ io.on('connection', socket => {
         rooms[roomID].songlist.push(new Song(song));
       } else {
         for (i = rooms[roomID].songlist.length - 1; i >= 0; i--) {
-          console.log("test");
           if (rooms[roomID].songlist[i].numVotes > 0) {
             rooms[roomID].songlist.splice(i + 1, 0, new Song(song));
             break;
@@ -153,9 +152,10 @@ io.on('connection', socket => {
     let sl = rooms[roomID].songlist;
     let idx = sl.findIndex((s) => s.id === song.id);
     let s = sl[idx];
+    sl.splice(idx, 1);
 
     io.to(roomID).emit('receive songlist', sl);
-    io.to(roomID).emit('play song deck 1', song);
+    io.to(roomID).emit('play song deck 1', s);
   });
 
   // Handle user send to deck 2 requests
@@ -163,9 +163,10 @@ io.on('connection', socket => {
     let sl = rooms[roomID].songlist;
     let idx = sl.findIndex((s) => s.id === song.id);
     let s = sl[idx];
+    sl.splice(idx, 1);
 
     io.to(roomID).emit('receive songlist', sl);
-    io.to(roomID).emit('play song deck 2', song);
+    io.to(roomID).emit('play song deck 2', s);
   });
 });
 
