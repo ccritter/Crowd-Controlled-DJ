@@ -49,103 +49,104 @@ export default class Deck extends Component {
 
   loadNewSong(song) {
     this.setState({ vidready: false });
-    console.log(song);
-    let load = new Promise((resolve) => {
-      if (this.player) {
-        this.player.destroy();
-      }
-      this.player = new window.YT.Player(this.ytcontainer, {
-        height: '0',
-        width: '0',
-        videoId: song.id,
-        playerVars: {
-          enablejsapi: 1,
-          rel: 0
-        },
-        events: {
-          onStateChange: this.onPlayerStateChange,
-          onPlaybackRateChange: this.onPlayerRateChange,
-          onReady: resolve
+    if (song) {
+      let load = new Promise((resolve) => {
+        if (this.player) {
+          this.player.destroy();
         }
-      });
-    });
-
-    load.then((success) => {
-      console.log("promise complete");
-
-      this.setState({ vidready: true });
-      // I put this here because I thought it might start buffering the video, making it so the first "play" click isn't delayed. It may not work though.
-      this.player.playVideo();
-      this.player.pauseVideo();
-
-      // Init volume slider
-      let volslider = document.getElementById(this.props.side + "volume");
-      volslider.style.height = '250px';
-      noUiSlider.create(volslider, {
-        start: this.player.getVolume(),
-        orientation: 'vertical',
-        direction: 'rtl',
-        connect: [true, false],
-        range: {
-          'min': 0,
-          'max': 100
-        }
+        this.player = new window.YT.Player(this.ytcontainer, {
+          height: '0',
+          width: '0',
+          videoId: song.id,
+          playerVars: {
+            enablejsapi: 1,
+            rel: 0
+          },
+          events: {
+            onStateChange: this.onPlayerStateChange,
+            onPlaybackRateChange: this.onPlayerRateChange,
+            onReady: resolve
+          }
+        });
       });
 
-      volslider.noUiSlider.on('update', (values) => {
-        this.player.setVolume(values[0]);
-      });
+      load.then((success) => {
+        console.log("promise complete");
 
-      // Init speed slider
-      let speedslider = document.getElementById(this.props.side + "speed");
-      speedslider.style.width = '300px';
-      noUiSlider.create(speedslider, {
-        start: 1,
-        range: {
-          'min': [0.5, .25],
-          '82%': [1.5, .5],
-          'max': [2]
-        },
-        pips: {
-          mode: 'steps',
-          filter: () => 1,
-          format: wNumb({ decimals: 2 }),
-          density: 100
-        }
-      });
-      speedslider.noUiSlider.on('update', (values) => {
-        this.player.setPlaybackRate(values[0]);
-      });
+        this.setState({ vidready: true });
+        // I put this here because I thought it might start buffering the video, making it so the first "play" click isn't delayed. It may not work though.
+        this.player.playVideo();
+        this.player.pauseVideo();
 
-      // Init playhead slider/controls
-      // TODO: Make sure this doesn't break when loading a new song. May have to delete it and readd it or something
-      let playslider = document.getElementById(this.props.side + "pheadcontrols");
-      playslider.style.width = '300px';
-      noUiSlider.create(playslider, {
-        start: [0, 0, this.player.getDuration()],
-        connect: true,
-        range: {
-          'min': 0,
-          'max': this.player.getDuration()
-        }
+        // Init volume slider
+        let volslider = document.getElementById(this.props.side + "volume");
+        volslider.style.height = '250px';
+        noUiSlider.create(volslider, {
+          start: this.player.getVolume(),
+          orientation: 'vertical',
+          direction: 'rtl',
+          connect: [true, false],
+          range: {
+            'min': 0,
+            'max': 100
+          }
+        });
+
+        volslider.noUiSlider.on('update', (values) => {
+          this.player.setVolume(values[0]);
+        });
+
+        // Init speed slider
+        let speedslider = document.getElementById(this.props.side + "speed");
+        speedslider.style.width = '300px';
+        noUiSlider.create(speedslider, {
+          start: 1,
+          range: {
+            'min': [0.5, .25],
+            '82%': [1.5, .5],
+            'max': [2]
+          },
+          pips: {
+            mode: 'steps',
+            filter: () => 1,
+            format: wNumb({ decimals: 2 }),
+            density: 100
+          }
+        });
+        speedslider.noUiSlider.on('update', (values) => {
+          this.player.setPlaybackRate(values[0]);
+        });
+
+        // Init playhead slider/controls
+        // TODO: Make sure this doesn't break when loading a new song. May have to delete it and readd it or something
+        let playslider = document.getElementById(this.props.side + "pheadcontrols");
+        playslider.style.width = '300px';
+        noUiSlider.create(playslider, {
+          start: [0, 0, this.player.getDuration()],
+          connect: true,
+          range: {
+            'min': 0,
+            'max': this.player.getDuration()
+          }
+        });
+        playslider.noUiSlider.on('change', (values, handle) => {
+          if (handle === 1) {
+            // "Start" handle has been updated/set
+            this.player.seekTo(values[1], true);
+          }
+        });
+        playslider.noUiSlider.on('start', (values, handle) => {
+          if (handle === 1) {
+            // "Start" handle has grabbed
+            clearInterval(this.state.playheadTimer);
+          }
+        });
+        let handles = playslider.querySelectorAll(".noUi-handle");
+        handles[0].classList.add("barhandle");
+        handles[1].classList.add("playheadhandle");
+        handles[2].classList.add("barhandle");
       });
-      playslider.noUiSlider.on('change', (values, handle) => {
-        if (handle === 1) {
-          // "Start" handle has been updated/set
-          this.player.seekTo(values[1], true);
-        }
-      });
-      playslider.noUiSlider.on('start', (values, handle) => {
-        if (handle === 1) {
-          // "Start" handle has grabbed
-          clearInterval(this.state.playheadTimer);
-        }
-      });
-      let handles = playslider.querySelectorAll(".noUi-handle");
-      handles[0].classList.add("barhandle");
-      handles[1].classList.add("playheadhandle");
-      handles[2].classList.add("barhandle");
-    });
+    }
   }
 
   onPlayerStateChange(e) {

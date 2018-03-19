@@ -42,21 +42,6 @@ export default class Turntable extends Component {
       xfade.noUiSlider.on('update', function(values, handle) {
         // TODO
       });
-
-      // TODO: Get rid of this
-      // this.sendSongToDeck({
-      //   id: 'dQw4w9WgXcQ',
-      //   title: 'Rick Astley - Never Gonna Give You Up',
-      //   channelName: 'YaBoiRickAstley',
-      //   thumbnail: 'https://i.ytimg.com/vi/dQw4w9WgXcQ/default.jpg'
-      // }, false);
-      //
-      // this.sendSongToDeck({
-      //   id: 'dQw4w9WgXcQ',
-      //   title: 'Rick Astley - Never Gonna Give You Up',
-      //   channelName: 'YaBoiRickAstley',
-      //   thumbnail: 'https://i.ytimg.com/vi/dQw4w9WgXcQ/default.jpg'
-      // }, true);
     });
   }
 

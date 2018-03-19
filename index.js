@@ -171,15 +171,18 @@ io.on('connection', socket => {
 
   socket.on("next", (roomID, side) => {
     let sl = rooms[roomID].songlist;
-    let s = sl[0];
-    sl.splice(0, 1);
+    let s = null
+    if (sl.length !== 0) {
+      s = sl[0];
+      sl.splice(0, 1);
 
+      io.to(roomID).emit('receive songlist', sl);
+    }
     if (side === "Left") {
       io.to(roomID).emit('play song deck 1', s);
     } else {
       io.to(roomID).emit('play song deck 2', s);
     }
-    io.to(roomID).emit('receive songlist', sl);
   });
 });
 
