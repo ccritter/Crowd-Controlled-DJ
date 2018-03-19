@@ -39,19 +39,17 @@ export default class SearchResults extends Component {
             let thumbnail = s.thumbnails.default.url;
 
             return (
-              <div key={id} className="col mx-4">
-                <div className="row justify-content-center flex-column p-2 pb-3">
-                  <img src={thumbnail} className="align-self-center pb-2"/>
-                  <span className="align-self-center text-center pb-2">{title}</span>
-                  <span className="align-self-center text-center pb-2 channel-name">{channelName}</span>
-                  <button className="align-self-center btn btn-default" onClick={() => { this.addSong({
-                    id: id,
-                    title: title,
-                    channelName: channelName,
-                    thumbnail: thumbnail }) }}>
-                      Add to Queue
-                  </button>
-                </div>
+              <div key={id} className="col d-flex flex-column align-items-center mx-4 mb-3">
+                <img src={thumbnail} className="pb-2"/>
+                <span className="text-center pb-2">{title}</span>
+                <span className="text-center pb-2 channel-name">{channelName}</span>
+                <button className="btn btn-default" onClick={() => { this.addSong({
+                   id: id,
+                   title: title,
+                   channelName: channelName,
+                   thumbnail: thumbnail }) }}>
+                  Add to Queue
+                </button>
               </div>
             );})}
           </div>
