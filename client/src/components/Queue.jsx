@@ -8,7 +8,7 @@ export default class Queue extends Component {
 
   render() {
     return (
-      <div className="Queue">
+      <div className={(this.props.hidden ? "d-none " : "") + "Queue"}>
         {this.props.songs.map((song) => {
           return (
             <QueuedSong song={song} socket={this.props.socket} room={this.props.room} mode={this.props.mode}/>

@@ -65,26 +65,29 @@ class App extends Component {
   }
 
   leaveRoom() {
-    this.setState({ mode: 0});
-    this.setState({ room: ''});
+    this.setState({ mode: 0, room: '', songlist: [] });
   }
 
   render() {
-    return (
-      <div className="App">
-        {this.state.mode === 0 ?
+    if (this.state.mode === 0) {
+      return (
+        <div className="App">
           <SplashScreen socket={socket}
                         appstate={this.changeMode}
                         changeroom={this.changeRoom}/>
-        :
+        </div>
+      );
+    } else {
+      return (
+        <div className="App">
           <MainContainer socket={socket}
                          songlist={this.state.songlist}
                          room={this.state.room}
                          mode={this.state.mode}
                          leaveRoom={this.leaveRoom}/>
-        }
-      </div>
-    );
+        </div>
+      );
+    }
   }
 }
 
