@@ -37,6 +37,15 @@ body {
   padding-right: 40px;
   padding-left: 440px;
   padding-top: 100px;
+  overflow-y: auto;
+}
+
+.QueueHeader {
+  position: sticky;
+  background-color: #151515;
+  z-index: 1;
+  top: 0;
+  width: 100%;
 }
 
 @media (max-width: 768px) {
@@ -45,20 +54,16 @@ body {
   }
 
   .SearchResults {
-    position: fixed;
-    width: 100%;
-    height: 100%;
+    position: static;
     z-index: 1;
-    padding-top: 120px;
+    padding-top: 40px;
     padding-left: 40px;
-    padding-right: 40px;
   }
 
   .VoteScreen {
-    position: fixed;
     width: 100%;
-    height: 100%;
     padding-right: 40px;
+    z-index: 0;
   }
 }
 
@@ -119,76 +124,6 @@ body {
 
 .arrow {
   cursor: pointer;
-}
-
-/*
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
-}
-
-
-.Topbar {
-  position: absolute;
-  background-color: #222;
-  height: 50px;
-  color: white;
-  float: left;
-  left: 300px;
-  right: 0px;
-  border-style: solid;
-  border-width: 1px;
-}
-
-.App-title {
-  font-size: 1.5em;
-}
-
-.VoteScreen {
-  position: absolute;
-  float: left;
-  border-style: solid;
-  border-width: 1px;
-  top: 0;
-  bottom: 0;
-  width: 300px;
-  overflow-y: scroll;
-  overflow-x: hidden;
-}
-
-
-.Queue {
-  position: absolute;
-}
-
-
-.Turntable {
-  position: relative;
-  left: 200px;
-}
-
-*/
-
-input[type=range][orient=vertical]
-{
-  writing-mode: bt-lr; /* IE */
-  -webkit-appearance: slider-vertical; /* WebKit */
-  width: 8px;
-  height: 175px;
-  padding: 0 5px;
-}
-
-/*[handle-num="0"] .noUi-handle:after {*/
-  /*content: "Text only for value 5";*/
-/*}*/
-
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
 }
 
 .btn-circle {

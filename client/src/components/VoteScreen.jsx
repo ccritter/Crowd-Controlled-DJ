@@ -10,10 +10,11 @@ export default class VoteScreen extends Component {
 
   // TODO: we may want to observe this in testing: Does the auto-sort-by-vote-count bother the user? like if they're about to click "upvote" and it automatically reorders so you accidentally vote for something else
   // TODO: Also, we should provide some visual feedback to the user when they click the "add to queue" button as well as loading the search results
+  // TODO: Also, we need to render the room code and exit button on the QueueHeader somewhere. See the paper prototype
   render() {
     return (
       <div className="VoteScreen border-right border-dark">
-        <div className="border-bottom border-dark p-3">
+        <div className="QueueHeader border-bottom border-dark p-3">
           <div className="row d-flex justify-content-between px-3">
             <div>
               <h2>Up Next</h2>

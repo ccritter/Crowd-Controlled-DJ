@@ -22,12 +22,12 @@ export default class SearchResults extends Component {
     return (
       <div className={(this.props.visible ? "" : "d-none ") + "SearchResults"}>
         <div className="row">
-          {this.props.mode === 2 ?
+          {this.props.mode === 2 || this.props.isMobile ?
             <button type="button" className="btn btn-circle" onClick={this.props.hideResults} aria-label="Close">
               <i className="fa fa-times"/>
             </button>
           :
-            ""}
+            null}
           <h2 className="pl-2">Search Results</h2>
         </div>
         <div className="row flex-wrap justify-content-between">
@@ -39,7 +39,7 @@ export default class SearchResults extends Component {
             let thumbnail = s.thumbnails.default.url;
 
             return (
-              <div key={id} className="col-3">
+              <div key={id} className="col mx-4">
                 <div className="row justify-content-center flex-column p-2 pb-3">
                   <img src={thumbnail} className="align-self-center pb-2"/>
                   <span className="align-self-center text-center pb-2">{title}</span>

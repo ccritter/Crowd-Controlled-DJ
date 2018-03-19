@@ -9,6 +9,7 @@ export default class SearchBar extends Component {
   }
 
   search(e) {
+    // TODO: prevent searching until the api is fully loaded
     e.preventDefault();
     let query = this.input.value;
     let request = gapi.client.youtube.search.list({

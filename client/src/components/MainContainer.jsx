@@ -44,12 +44,6 @@ export default class MainContainer extends Component {
         <div className="MainContainer container-fluid">
         {isMobile ?
           <div className="col-12">
-            <VoteScreen socket={this.props.socket}
-                        songlist={this.props.songlist}
-                        room={this.props.room}
-                        mode={this.props.mode}
-                        sendResults={this.showResults}
-                        hideQueue={this.state.resultsAreVisible}/>
             <SearchResults visible={this.state.resultsAreVisible}
                            socket={this.props.socket}
                            results={this.state.results}
@@ -57,6 +51,12 @@ export default class MainContainer extends Component {
                            mode={this.props.mode}
                            isMobile={true}
                            hideResults={this.hideResults}/>
+            <VoteScreen socket={this.props.socket}
+                        songlist={this.props.songlist}
+                        room={this.props.room}
+                        mode={this.props.mode}
+                        sendResults={this.showResults}
+                        hideQueue={this.state.resultsAreVisible}/>
           </div>
         :
           <div className="row">
