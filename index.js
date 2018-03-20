@@ -14,6 +14,8 @@ class Song {
     this.thumbnail = song.thumbnail;
     this.channelName = song.channelName;
     this.numVotes = 0;
+    this.whoDownVoted = [];
+    this.whoUpVoted = [];
   }
 
   upvote() {
@@ -69,7 +71,7 @@ io.on('connection', socket => {
     socket.join(roomID);
     rooms[roomID].djID = socket.id;
     rooms[roomID].songlist = [];
-    cb(roomID); // TODO: maybe make a room init function, and add functions like getTopSong()
+    cb(roomID);
   });
 
   // Handle user add song requests
@@ -98,7 +100,19 @@ io.on('connection', socket => {
     let sl = rooms[roomID].songlist;
     let idx = sl.findIndex((s) => s.id === song.id);
     let s = sl[idx];
-    s.upvote();
+    let socketUpVoted = s.whoUpVoted.findIndex((id) => id === socket.id);
+    let socketDownVoted = s.whoDownVoted.findIndex((id) => id === socket.id);
+    if (socketUpVoted === -1) {
+      s.upvote();
+      if (socketDownVoted !== -1) {
+        s.upvote();
+        s.whoDownVoted.splice(socketDownVoted, 1);
+      }
+      s.whoUpVoted.push(socket.id)
+    } else {
+      s.downvote();
+      s.whoUpVoted.splice(socketUpVoted, 1);
+    }
 
     for (i = idx; i >= 0; i--) {
       if (sl[i].numVotes > s.numVotes) {
@@ -118,7 +132,19 @@ io.on('connection', socket => {
     let sl = rooms[roomID].songlist;
     let idx = sl.findIndex((s) => s.id === song.id);
     let s = sl[idx];
-    s.downvote();
+    let socketUpVoted = s.whoUpVoted.findIndex((id) => id === socket.id);
+    let socketDownVoted = s.whoDownVoted.findIndex((id) => id === socket.id);
+    if (socketDownVoted === -1) {
+      s.downvote();
+      if (socketUpVoted !== -1) {
+        s.downvote();
+        s.whoUpVoted.splice(socketUpVoted, 1);
+      }
+      s.whoDownVoted.push(socket.id)
+    } else {
+      s.upvote();
+      s.whoDownVoted.splice(socketDownVoted, 1);
+    }
 
     // TODO: Base the downvote threshold on the number of people in room. maybe if 25% vote down?
     if (s.numVotes < -5) {
