@@ -42,6 +42,11 @@ export default class Deck extends Component {
    */
 
   componentDidUpdate(prevProps) {
+    if (this.state.vidready && prevProps.amt !== this.props.amt) {
+      let volslider = document.getElementById(this.props.side + "volume");
+      this.player.setVolume(volslider.noUiSlider.get() * this.props.amt);
+    }
+
     if (prevProps.currentSong !== this.props.currentSong) {
       this.loadNewSong(this.props.currentSong);
     }
@@ -93,7 +98,7 @@ export default class Deck extends Component {
         });
 
         volslider.noUiSlider.on('update', (values) => {
-          this.player.setVolume(values[0]);
+          this.player.setVolume(values[0] * this.props.amt);
         });
 
         // Init speed slider
@@ -248,15 +253,6 @@ export default class Deck extends Component {
                   <button className="btn btn-default" title="Set loop start point">Start</button>
                   <button className="btn btn-default" title="Set loop end point">End</button>
                 </div>
-                {/* TODO: For now, we'll just not have these implemented until we work it out */}
-                {/*<div className="btn-group mr-2" role="group">*/}
-                  {/*<button className="btn btn-default">Set</button>*/}
-                {/*</div>*/}
-                {/*<div className="btn-group" role="group">*/}
-                  {/*<button className="btn btn-default">A</button>*/}
-                  {/*<button className="btn btn-default">B</button>*/}
-                  {/*<button className="btn btn-default">C</button>*/}
-                {/*</div>*/}
               </div>
             </div>
           </div>
