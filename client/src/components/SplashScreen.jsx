@@ -29,11 +29,11 @@ export default class SplashScreen extends Component {
 
   joinRoom(e) {
     e.preventDefault();
-    let roomID = this.input.value;
+    let roomID = this.input.value.toLowerCase();
     socket.emit('joinroom', roomID, function(success) {
       if (success) {
         appstate(1);
-        changeroom(roomID.toLowerCase());
+        changeroom(roomID);
       }
       // TODO: else display some error message
     });
