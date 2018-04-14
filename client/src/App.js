@@ -18,12 +18,14 @@ class App extends Component {
       room: '',
       songlist: [],
       song1: null,
-      song2: null
+      song2: null,
+      autoplay: false
     };
 
     this.changeMode = this.changeMode.bind(this);
     this.changeRoom = this.changeRoom.bind(this);
     this.leaveRoom = this.leaveRoom.bind(this);
+    this.toggleAutoplay = this.toggleAutoplay.bind(this);
   }
 
   loadYoutubeDataApi() {
@@ -76,6 +78,10 @@ class App extends Component {
     this.setState({ mode: 0, room: '', songlist: [] });
   }
 
+  toggleAutoplay() {
+    this.setState({ autoplay: !this.state.autoplay });
+  }
+
   render() {
     if (this.state.mode === 0) {
       return (
@@ -90,10 +96,11 @@ class App extends Component {
         <div className="App">
           <MainContainer socket={socket}
                          songlist={this.state.songlist}
-      song1={this.state.song1}
-      song2={this.state.song2}
+                         song1={this.state.song1}
+                         song2={this.state.song2}
                          room={this.state.room}
                          mode={this.state.mode}
+                         toggleAutoplay={this.toggleAutoplay}
                          leaveRoom={this.leaveRoom}/>
         </div>
       );

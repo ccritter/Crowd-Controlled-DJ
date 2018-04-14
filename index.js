@@ -75,7 +75,7 @@ io.on('connection', socket => {
   });
 
   // Handle user add song requests
-  socket.on("addsong", (song, roomID) => {
+  socket.on("addsong", (song, roomID, cb) => {
     if (rooms[roomID].songlist.find((s) => s.id === song.id)) {
       socket.emit('dupesong');
     } else {
@@ -91,6 +91,8 @@ io.on('connection', socket => {
           }
         }
       }
+
+      cb(true);
       io.to(roomID).emit('receive songlist', rooms[roomID].songlist);
     }
   });

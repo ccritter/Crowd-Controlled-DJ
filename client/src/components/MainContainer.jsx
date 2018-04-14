@@ -57,6 +57,7 @@ export default class MainContainer extends Component {
                         mode={this.props.mode}
                         sendResults={this.showResults}
                         isMobile={isMobile}
+                        toggleAutoplay={this.props.toggleAutoplay}
                         leaveRoom={this.props.leaveRoom}
                         hideQueue={this.state.resultsAreVisible}/>
           </div>
@@ -67,6 +68,7 @@ export default class MainContainer extends Component {
                         room={this.props.room}
                         mode={this.props.mode}
                         sendResults={this.showResults}
+                        toggleAutoplay={this.props.toggleAutoplay}
                         hidden={this.state.resultsAreVisible}/>
             <div className="col-sm-12 main">
               <Topbar room={this.props.room} mode={this.props.mode} leaveRoom={this.props.leaveRoom}/>

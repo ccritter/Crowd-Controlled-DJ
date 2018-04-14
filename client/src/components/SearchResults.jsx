@@ -15,7 +15,8 @@ export default class SearchResults extends Component {
   }
 
   addSong(song) {
-    this.props.socket.emit('addsong', song, this.props.room);
+    // TODO: In here, make a callback such that when the server adds the song, the user gets visual feedback that the song was added.
+    this.props.socket.emit('addsong', song, this.props.room, (success) => { if (success) alert('Song added.') });
   }
 
   render() {
